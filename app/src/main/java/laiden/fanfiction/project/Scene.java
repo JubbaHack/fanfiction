@@ -20,7 +20,7 @@ public class Scene {
         things = new ArrayList<Thing>();
         this.background = DEFAULT_B;
 
-        for(int i = 1; i <= 2; i++){
+        for(int i = 1; i <= 3; i++){
             Thing t = new Thing();
             t.setText("Lorem ipsum dolor sit amet, per temporibus reprehendunt te, choro graecis vivendum ad per. Privet Nastya. No quo probo primis. Mauris convallis ante sed felis malesuada dapibus. Vivamus ut arcu tellus. #" + i);
             add(t);
