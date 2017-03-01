@@ -14,6 +14,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import java.util.LinkedList;
+
 import laiden.fanfiction.project.Scene;
 import laiden.fanfiction.project.Story;
 import laiden.fanfiction.project.Thing;
@@ -33,8 +35,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
 
     private static Paint p;
-    private static int width;
-    private static int height;
+    public static int width;
+    public static int height;
 
     public static StoryView instance;
 
@@ -151,7 +153,31 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             resize_corner = -1;
         }
     }
+    static LinkedList<Long> times = new LinkedList<Long>(){{
+        add(System.nanoTime());
+    }};
 
+    /*@Override
+    protected void onDraw(Canvas canvas) {
+        double fps = fps();
+        // ...
+        super.onDraw(canvas);
+    }*/
+
+    private static final int MAX_SIZE = 100;
+    private static final double NANOS = 1000000000.0;
+
+    /** Calculates and returns frames per second */
+    public static double fps() {
+        long lastTime = System.nanoTime();
+        double difference = (lastTime - times.getFirst()) / NANOS;
+        times.addLast(lastTime);
+        int size = times.size();
+        if (size > MAX_SIZE) {
+            times.removeFirst();
+        }
+        return difference > 0 ? (times.size() / difference) : 0;
+    }
     public void play(Story s){
 
         this.story = s;
@@ -163,6 +189,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width,
                                int height) {
+        this.height = height;
+        this.width = width;
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.RectF;
 import android.view.SurfaceHolder;
 
@@ -40,20 +41,35 @@ class DrawThread extends Thread{
 
             canvas = null;
             try {
-                // получаем объект Canvas и выполняем отрисовку
-                ArrayList<RectF> drawnboxes = new ArrayList<>();
+                final Paint debug_paint = new Paint();
+                debug_paint.setAntiAlias(true);
+                debug_paint.setTextSize(30);
+                debug_paint.setColor(Color.WHITE);
+
+                ArrayList<RectF> drawn_boxes = new ArrayList<>();
+                ArrayList<Thing> drawables = new ArrayList<>();
+
                 canvas = surfaceHolder.lockCanvas(null);
                 if(canvas != null && StoryView.s != null && StoryView.s.things != null) synchronized (surfaceHolder) {
                     canvas.drawColor(Color.parseColor(StoryView.s.background)); // todo: add a resource parser: background can be image or color
 
-                    for(int j = StoryView.s.things.size() - 1; j >= 0; j--){
-                        Thing t = StoryView.s.things.get(j);
-                        boolean sel = t == StoryView.thing;
-                        if(drawnboxes.indexOf(t.box()) == -1){
-                            t.render(canvas, sel);
-                            drawnboxes.add(t.box());
+                    for(Thing t: StoryView.s.things){
+                        //Thing t = StoryView.s.things.get(j);
+                        RectF box = t.box();
+                        boolean draw = true;
+                        for(RectF drawn_box: drawn_boxes) if(drawn_box.contains(box)) draw = false;
+                        if(draw){
+                            drawables.add(t);
+                            drawn_boxes.add(box);
                         }
                     }
+
+                    for(int i = drawables.size()-1; i >= 0; i--){
+                        Thing d = drawables.get(i);
+                        d.render(canvas, d == StoryView.thing);
+                    }
+
+                    canvas.drawText("visible things: " + drawables.size() + ", " + (int)(StoryView.fps()) + "fps", 10, StoryView.height-10, debug_paint);
                 }
             }
             finally {
