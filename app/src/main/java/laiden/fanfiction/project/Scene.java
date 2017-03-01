@@ -11,7 +11,7 @@ import java.util.Comparator;
 public class Scene {
 
     private static final String DEFAULT_B = "#000000";
-    private static final int THING_LIMIT = 100;
+    private static final int THING_LIMIT = 50;
 
     public ArrayList<Thing> things;
     public String background;
