@@ -4,7 +4,9 @@ package laiden.fanfiction.project;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -14,10 +16,10 @@ import java.util.ArrayList;
 
 public class Thing {
 
-    private static final float DEFAULT_W = 250;
-    private static final float DEFAULT_H = 100;
-    private static final float DEFAULT_X = 10;
-    private static final float DEFAULT_Y = 10;
+    private static final int DEFAULT_W = 250;
+    private static final int DEFAULT_H = 100;
+    private static final int DEFAULT_X = 10;
+    private static final int DEFAULT_Y = 10;
 
     private static transient Paint _p;
     private static transient RectF _r;
@@ -30,10 +32,10 @@ public class Thing {
 
     public int index;
 
-    private float w;
-    private float h;
-    private float x;
-    private float y;
+    private int w;
+    private int h;
+    private int x;
+    private int y;
 
     private String background_color;
     private String text_color;
@@ -59,18 +61,18 @@ public class Thing {
         this.text = t;
     }
     public void setPosition(float x, float y){
-        this.x = x;
-        this.y = y;
+        this.x = (int)x;
+        this.y = (int)y;
     }
     public void setBox(RectF b){
-        this.x = b.left;
-        this.y = b.top;
-        this.w = b.width();
-        this.h = b.height();
+        this.x = (int)b.left;
+        this.y = (int)b.top;
+        this.w = (int)b.width();
+        this.h = (int)b.height();
     }
 
-    public PointF getPosition(){
-        return new PointF(this.x, this.y);
+    public Point getPosition(){
+        return new Point(this.x, this.y);
     }
 
     public RectF box(){
@@ -94,7 +96,7 @@ public class Thing {
         _p.setTextSize(30.0f);
 
         _tp = new TextPaint(_p);
-        _sl = new StaticLayout(text, _tp, (int)w, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        _sl = new StaticLayout(text, _tp, w, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
         canvas.save();
         canvas.clipRect(box());
         canvas.translate(x, y);
