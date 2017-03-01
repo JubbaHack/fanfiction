@@ -5,15 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
-import android.widget.Toast;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 
 import java.util.ArrayList;
-
-import laiden.fanfiction.MainActivity;
-import laiden.fanfiction.TextRect;
 
 public class Thing {
 
@@ -24,7 +21,8 @@ public class Thing {
 
     private static transient Paint _p;
     private static transient RectF _r;
-    private static transient TextRect _t;
+    private static transient TextPaint _tp;
+    private static transient StaticLayout _sl;
 
     private static final String DEFAULT_BC = "#FFFFFF";
     private static final String DEFAULT_TC = "#000000";
@@ -45,7 +43,8 @@ public class Thing {
         this._p = new Paint();
         _p.setAntiAlias(true);
         this._r = new RectF();
-        this._t = null;
+        this._tp = new TextPaint(_p);
+
 
         this.w                = DEFAULT_W;
         this.h                = DEFAULT_H;
@@ -100,9 +99,18 @@ public class Thing {
         _p.setColor(Color.parseColor(text_color));
         _p.setTextSize(30.0f);
 
-        _t = new TextRect(_p);
-        _t.prepare(text, (int)w, (int)h);
-        _t.draw(canvas, (int)x, (int)y);
+        _tp = new TextPaint(_p);
+        _sl = new StaticLayout(text, _tp, (int)w, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        canvas.save();
+        canvas.clipRect(box());
+        canvas.translate(x, y);
+        _sl.draw(canvas);
+        canvas.restore();
+
+        _sl = null;
+
+        //canvas.drawText(text, x, y, _p);
+
 
 
 

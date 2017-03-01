@@ -37,7 +37,7 @@ class DrawThread extends Thread{
             try {
                 // получаем объект Canvas и выполняем отрисовку
                 canvas = surfaceHolder.lockCanvas(null);
-                if(canvas != null) synchronized (surfaceHolder) {
+                if(canvas != null && StoryView.s != null && StoryView.s.things != null) synchronized (surfaceHolder) {
                     canvas.drawColor(Color.parseColor(StoryView.s.background)); // todo: add a resource parser: background can be image or color
 
                     for(int j = StoryView.s.things.size() - 1; j >= 0; j--){
