@@ -24,7 +24,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     private DrawThread drawThread;
     private static final int DOUBLECLICK = 300;
 
-    public static Story story;
+    public static Story story; // todo make fields private
     public static Scene s;
     public static Thing thing;
     public static int scene;
@@ -69,11 +69,12 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             if(resize_corner == -1) {
                 for (Thing t : s.things) {
                     if (t.box().contains(x, y)) {
-                        t.onTouch(x, y);
+                        //t.onTouch(x, y);
 
                         if(thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
 
-                            // double click
+                            DialogWindow alert = new DialogWindow();
+                            alert.showDialog(MainActivity.instance, "Text");
 
                             doubleclick = false;
 

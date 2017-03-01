@@ -40,10 +40,10 @@ public class Thing {
     private String text;
 
     Thing(){
-        this._p = new Paint();
+        _p = new Paint();
         _p.setAntiAlias(true);
-        this._r = new RectF();
-        this._tp = new TextPaint(_p);
+        _r = new RectF();
+        _tp = new TextPaint(_p);
 
 
         this.w                = DEFAULT_W;
@@ -62,10 +62,6 @@ public class Thing {
         this.x = x;
         this.y = y;
     }
-    public void setPosition(PointF p){
-        this.x = p.x;
-        this.y = p.y;
-    }
     public void setBox(RectF b){
         this.x = b.left;
         this.y = b.top;
@@ -76,9 +72,7 @@ public class Thing {
     public PointF getPosition(){
         return new PointF(this.x, this.y);
     }
-    public void onTouch(double x, double y){
-        //Toast.makeText(MainActivity.instance, "Clicked on Thing '" + this.text + "'", Toast.LENGTH_SHORT).show();
-    }
+
     public RectF box(){
         return new RectF(x, y, x+w, y+h);
     }
