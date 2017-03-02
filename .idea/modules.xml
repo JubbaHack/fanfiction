@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Fanfiction.iml" filepath="$PROJECT_DIR$/Fanfiction.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fanfiction.iml" filepath="$PROJECT_DIR$/fanfiction.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fanfiction.iml" filepath="$PROJECT_DIR$/fanfiction.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fanfiction.iml" filepath="$PROJECT_DIR$/fanfiction.iml" />
       <module fileurl="file://$PROJECT_DIR$/fanfiction.iml" filepath="$PROJECT_DIR$/fanfiction.iml" />
     </modules>
   </component>

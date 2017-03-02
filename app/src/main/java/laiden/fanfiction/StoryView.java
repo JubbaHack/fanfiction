@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -56,6 +57,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         this.click = new PointF();
         this.s = null;
 
+        //Drawable d = Drawable.createFromPath(pathName);
+
         this.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -79,8 +82,11 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
                         if(thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
 
-                            DialogWindow alert = new DialogWindow();
-                            alert.showDialog(MainActivity.instance, "Text");
+                            //DialogWindow alert = new DialogWindow();
+                            //alert.showDialog(MainActivity.instance, "Text");
+
+                            //ProjectSettingsWindow alert = new ProjectSettingsWindow();
+                            //alert.showDialog(MainActivity.instance, "Text");
 
                             doubleclick = false;
 

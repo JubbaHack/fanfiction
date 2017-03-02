@@ -98,17 +98,12 @@ public class Thing {
         _tp = new TextPaint(_p);
         _sl = new StaticLayout(text, _tp, w, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
         canvas.save();
-        canvas.clipRect(box());
+        canvas.clipRect(_r);
         canvas.translate(x, y);
         _sl.draw(canvas);
         canvas.restore();
 
         _sl = null;
-
-        //canvas.drawText(text, x, y, _p);
-
-
-
 
         _p.setStyle(Paint.Style.STROKE);
         _p.setStrokeWidth(2);
