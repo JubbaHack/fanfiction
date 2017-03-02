@@ -9,10 +9,12 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.view.SurfaceHolder;
 
 import java.util.ArrayList;
 
+import laiden.fanfiction.project.Story;
 import laiden.fanfiction.project.Thing;
 
 /**
@@ -52,30 +54,55 @@ class DrawThread extends Thread{
 
                 canvas = surfaceHolder.lockCanvas(null);
                 if(canvas != null && StoryView.s != null && StoryView.s.things != null) synchronized (surfaceHolder) {
-                    canvas.drawColor(Color.parseColor(StoryView.s.background)); // todo: add a resource parser: background can be image or color
+                    if(StoryView.s != null) {
+                        canvas.drawColor(Color.parseColor(StoryView.s.background)); // todo: add a resource parser: background can be image or color
 
-                    for(Thing t: StoryView.s.things){
-                        //Thing t = StoryView.s.things.get(j);
-                        RectF box = t.box();
-                        boolean draw = true;
-                        for(RectF drawn_box: drawn_boxes) if(drawn_box.contains(box)) draw = false;
-                        if(draw){
-                            drawables.add(t);
-                            drawn_boxes.add(box);
+                        for (int i = StoryView.s.things.size() - 1; i >= 0; i--) {
+                            Thing t = StoryView.s.things.get(i);
+                            RectF box = t.box();
+                            boolean draw = true;
+                            for (RectF drawn_box : drawn_boxes)
+                                if (drawn_box.contains(box)) draw = false;
+                            if (draw) {
+                                drawables.add(t);
+                                drawn_boxes.add(box);
+                            }
+                        }
+
+                        for (int i = drawables.size() - 1; i >= 0; i--) {
+                            Thing d = drawables.get(i);
+                            d.render(canvas, d == StoryView.thing);
+                        }
+                        //canvas.drawText("visible things: " + drawables.size() + ", " + (int)(StoryView.fps()) + "fps", 10, StoryView.height-10, debug_paint);
+
+                        if (StoryView.s.addable()) StoryView.ICON_COPY.setAlpha(255);
+                        else StoryView.ICON_COPY.setAlpha(127);
+
+                        if (!StoryView.moving) {
+                            canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
+                            if (StoryView.thing != null) StoryView.ICON_COPY.draw(canvas);
+                            else StoryView.ICON_ADD.draw(canvas);
+                            StoryView.ICON_UNDO.draw(canvas);
+                            StoryView.ICON_REDO.draw(canvas);
+                        } else {
+                            if (StoryView.thing.box().intersect(StoryView.CONSOLE_RECT)) {
+                                debug_paint.setColor(Color.RED);
+                                debug_paint.setTypeface(Typeface.DEFAULT_BOLD);
+                                canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
+
+                                debug_paint.setColor(Color.WHITE);
+                                debug_paint.setTextSize(40);
+                                StoryView.ICON_DELETE.draw(canvas);
+                                canvas.drawText("Remove", 100, StoryView.height - 37, debug_paint);
+                            } else {
+                                canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
+                                if (StoryView.thing != null) StoryView.ICON_COPY.draw(canvas);
+                                else StoryView.ICON_ADD.draw(canvas);
+                                StoryView.ICON_UNDO.draw(canvas);
+                                StoryView.ICON_REDO.draw(canvas);
+                            }
                         }
                     }
-
-                    for(int i = drawables.size()-1; i >= 0; i--){
-                        Thing d = drawables.get(i);
-                        d.render(canvas, d == StoryView.thing);
-                    }
-
-                    canvas.drawText("visible things: " + drawables.size() + ", " + (int)(StoryView.fps()) + "fps", 10, StoryView.height-10, debug_paint);
-
-                    canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
-                    StoryView.ICON_ADD.draw(canvas);
-                    StoryView.ICON_UNDO.draw(canvas);
-                    StoryView.ICON_REDO.draw(canvas);
                 }
             }
             finally {

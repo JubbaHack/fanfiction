@@ -38,6 +38,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     private static ArrayList<String> editor_history = new ArrayList<>();
     private static int editor_history_ptr = -1;
 
+    public static boolean moving = false;
+
     private static Paint p;
     public static int width;
     public static int height;
@@ -51,6 +53,9 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     public static final Drawable ICON_MENU = MainActivity.instance.getResources().getDrawable(R.drawable.menu);
     public static final Drawable ICON_DASHBOARD = MainActivity.instance.getResources().getDrawable(R.drawable.dash);
     public static final Drawable ICON_PLAY = MainActivity.instance.getResources().getDrawable(R.drawable.play);
+    public static final Drawable ICON_DELETE = MainActivity.instance.getResources().getDrawable(R.drawable.delete);
+    public static final Drawable ICON_DELETE_BLACK = MainActivity.instance.getResources().getDrawable(R.drawable.delete_black);
+    public static final Drawable ICON_COPY = MainActivity.instance.getResources().getDrawable(R.drawable.copy);
 
     public static RectF CONSOLE_RECT = new RectF();
 
@@ -68,7 +73,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         click = new PointF();
         s = null;
 
-        //Drawable d = Drawable.createFromPath(pathName);
+        /*Drawable d = Drawable.createFromPath(pathName);*/
 
         EditorHistory.updateui();
 
@@ -86,7 +91,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             boolean was_selected = false;
             if(thing != null) resize_corner = thing.resizeFrom(x, y);
             if(resize_corner == -1) {
-                for (Thing t : s.things) {
+                for(int i = s.things.size()-1; i >= 0; i--){
+                    Thing t = s.things.get(i);
                     if (t.box().contains(x, y)) {
                         //t.onTouch(x, y);
 
@@ -118,9 +124,23 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     }
 
                 }
-                if (ICON_UNDO.getBounds().contains((int)x, (int)y)) EditorHistory.undo();
 
-                else if(ICON_REDO.getBounds().contains((int)x, (int)y)) EditorHistory.redo();
+                if(!moving){
+                    if (ICON_UNDO.getBounds().contains((int)x, (int)y)) EditorHistory.undo();
+                    else if(ICON_REDO.getBounds().contains((int)x, (int)y)) EditorHistory.redo();
+                }
+
+                if(thing != null && !was_selected && ICON_COPY.getBounds().contains((int)x, (int)y)){
+                    if(s.addable()){
+                        Thing _t = new Thing();
+                        _t.setBox(thing.box());
+                        _t.setPosition(thing.getPosition().x+10, thing.getPosition().y+10);
+                        s.add(_t);
+
+                        thing = _t;
+                        was_selected = true;
+                    }
+                }
             }
 
             if(!was_selected && resize_corner == -1) thing = null;
@@ -174,11 +194,18 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                         thing.setBox(box);
                     }
                 }
-                else thing.setPosition(x-click.x, y-click.y); // move
+                else if(!ICON_COPY.getBounds().contains((int)x, (int)y)){
+                    moving = true;
+                    thing.setPosition(x-click.x, y-click.y); // move
+                }
             }
         }
         else if(event == MotionEvent.ACTION_UP){
             resize_corner = -1;
+            moving = false;
+            if(thing != null && thing.box().intersect(CONSOLE_RECT)){
+                s.things.remove(thing);
+            }
             if(thing != null) EditorHistory.add(thing, "SETCOORDS", thing.getPosition().x, thing.getPosition().y);
 
         }
@@ -186,13 +213,6 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     static LinkedList<Long> times = new LinkedList<Long>(){{
         add(System.nanoTime());
     }};
-
-    /*@Override
-    protected void onDraw(Canvas canvas) {
-        double fps = fps();
-        // ...
-        super.onDraw(canvas);
-    }*/
 
     private static final int MAX_SIZE = 100;
     private static final double NANOS = 1000000000.0;
@@ -231,9 +251,12 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         final int s = 75;
 
         ICON_ADD.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
+        ICON_COPY.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
+        ICON_DELETE_BLACK.setBounds((width/2)-40, height - s - d, (width/2)+40, height - d);
         ICON_UNDO.setBounds(s*1 + d + 10, height - s - d, s*2 + d + 10, height - d);
         ICON_REDO.setBounds(s*2 + 45, height - s - d, s*3 + 45, height - d);
-        //ICON_ADD.setBounds(0, height - 100, 100, height);
+
+        ICON_DELETE.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
 
     }
 
@@ -253,9 +276,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             try {
                 drawThread.join();
                 retry = false;
-            } catch (InterruptedException e) {
-                // если не получилось, то будем пытаться еще и еще
-            }
+            } catch (InterruptedException ignored) {}
         }
     }
     static final class EditorHistory {

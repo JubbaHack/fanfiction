@@ -41,7 +41,7 @@ public class Thing {
     private String text_color;
     private String text;
 
-    Thing(){
+    public Thing(){
         _p = new Paint();
         _p.setAntiAlias(true);
         _r = new RectF();
