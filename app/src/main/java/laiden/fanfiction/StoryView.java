@@ -276,15 +276,19 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     editor_history.add(entry);
                 }
                 else{
-                    if(editor_history_ptr == -1 && editor_history.size() > 1) editor_history.clear();
-                    else for(int i = editor_history.size() - 2; i >= editor_history_ptr; i--) editor_history.add(editor_history.get(i));
+                    Log.d("D", "deleting");
+                    for(int i = editor_history.size()-1; i >= editor_history_ptr; i--) editor_history.remove(i);
 
                     editor_history.add(entry);
                     editor_history_ptr = editor_history.size() - 1;
                 }
             }
             else editor_history_ptr++;
-            Log.d("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
+
+            Log.e("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
+            for(String z: editor_history){
+                Log.e("History", editor_history_ptr == editor_history.indexOf(z) ? "> " + z : "  " + z);
+            }
             updateui();
         }
         static void redo(){
