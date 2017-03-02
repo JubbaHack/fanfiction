@@ -266,9 +266,6 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             for(Object _p: params) p += _p.toString() + " ";
             p = p.trim();
             String entry = index + " " + method + " " + p;
-
-            Log.d("History", entry);
-            Log.d("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
             /* Add a new EditorHistory entry if it's not the same one */
             if(editor_history.size() == 0 || !editor_history.get(editor_history.size() - 1).equals(entry)){
                 if(editor_history_ptr == editor_history.size()-1){
@@ -276,7 +273,6 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     editor_history.add(entry);
                 }
                 else{
-                    Log.d("D", "deleting");
                     for(int i = editor_history.size()-1; i >= editor_history_ptr; i--) editor_history.remove(i);
 
                     editor_history.add(entry);
@@ -284,11 +280,6 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
             else editor_history_ptr++;
-
-            Log.e("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
-            for(String z: editor_history){
-                Log.e("History", editor_history_ptr == editor_history.indexOf(z) ? "> " + z : "  " + z);
-            }
             updateui();
         }
         static void redo(){
@@ -326,12 +317,6 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                 int x = Integer.parseInt(_entry[2]);
                 int y = Integer.parseInt(_entry[3]);
                 t.setPosition(x, y);
-            }
-            Log.d("History", "Performed " + method.toLowerCase());
-
-            Log.e("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
-            for(String z: editor_history){
-                Log.e("History", editor_history_ptr == editor_history.indexOf(z) ? "> " + z : "  " + z);
             }
 
 
