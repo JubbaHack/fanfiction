@@ -118,7 +118,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     }
 
                 }
-                if     (ICON_UNDO.getBounds().contains((int)x, (int)y)) EditorHistory.undo();
+                if (ICON_UNDO.getBounds().contains((int)x, (int)y)) EditorHistory.undo();
+
                 else if(ICON_REDO.getBounds().contains((int)x, (int)y)) EditorHistory.redo();
             }
 
@@ -178,7 +179,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         }
         else if(event == MotionEvent.ACTION_UP){
             resize_corner = -1;
-            //if(thing != null) EditorHistory.add(thing, "SETCOORDS", thing.getPosition().x, thing.getPosition().y);
+            if(thing != null) EditorHistory.add(thing, "SETCOORDS", thing.getPosition().x, thing.getPosition().y);
 
         }
     }
@@ -275,8 +276,9 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     editor_history.add(entry);
                 }
                 else{
-                    if(editor_history_ptr == -1 && editor_history.size() > 1) editor_history_ptr++;
-                    for(int i = editor_history.size() - 2; i >= editor_history_ptr; i--) editor_history.add(editor_history.get(i));
+                    if(editor_history_ptr == -1 && editor_history.size() > 1) editor_history.clear();
+                    else for(int i = editor_history.size() - 2; i >= editor_history_ptr; i--) editor_history.add(editor_history.get(i));
+
                     editor_history.add(entry);
                     editor_history_ptr = editor_history.size() - 1;
                 }
@@ -286,22 +288,30 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             updateui();
         }
         static void redo(){
-            perform(editor_history.get(editor_history_ptr));
+            if (editor_history_ptr == editor_history.size() - 1){
+                Log.d("History", "Nothing to redo");
+                return;
+            }
+
             editor_history_ptr++;
+            perform(editor_history.get(editor_history_ptr));
+
 
             updateui();
         }
         static void undo(){
-            if(editor_history.size() == 0 || editor_history_ptr < 0){
-                editor_history_ptr = -1;
-                editor_history.clear();
+            if(editor_history_ptr <= 0){
+                editor_history_ptr = 0;
                 Log.d("History", "Nothing to undo");
                 return;
             }
-            perform(editor_history.get(editor_history_ptr));
+
+
             editor_history_ptr--;
+            perform(editor_history.get(editor_history_ptr));
 
             updateui();
+
         }
         static void perform(String entry) {
             String[] _entry = entry.split(" ");
@@ -315,17 +325,23 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             }
             Log.d("History", "Performed " + method.toLowerCase());
 
+            Log.e("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
+            for(String z: editor_history){
+                Log.e("History", editor_history_ptr == editor_history.indexOf(z) ? "> " + z : "  " + z);
+            }
+
+
         }
         static void updateui() {
+            ICON_UNDO.setAlpha(255);
+            ICON_REDO.setAlpha(255);
             if (editor_history.size() == 0) {
                 ICON_UNDO.setAlpha(120);
                 ICON_REDO.setAlpha(120);
             }
-            else if (editor_history_ptr < 0) {
+            else if (editor_history_ptr <= 0) {
                 ICON_UNDO.setAlpha(120);
-                ICON_REDO.setAlpha(255);
             } else if (editor_history_ptr == editor_history.size() - 1) {
-                ICON_UNDO.setAlpha(255);
                 ICON_REDO.setAlpha(120);
             }
         }
