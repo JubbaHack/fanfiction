@@ -36,7 +36,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     private static boolean doubleclick = false;
     private static long doubleclick_time = 0;
     private static ArrayList<String> editor_history = new ArrayList<>();
-    private static int editor_history_ptr = 0;
+    private static int editor_history_ptr = -1;
 
     private static Paint p;
     public static int width;
@@ -168,7 +168,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         }
         else if(event == MotionEvent.ACTION_UP){
             resize_corner = -1;
-            if(thing != null) EditorHistory.add(thing, "SETCOORDS", thing.getPosition().x, thing.getPosition().y);
+            //if(thing != null) EditorHistory.add(thing, "SETCOORDS", thing.getPosition().x, thing.getPosition().y);
 
         }
     }
@@ -243,24 +243,44 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             String entry = index + " " + method + " " + p;
 
             Log.d("History", entry);
-
+            Log.d("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
             /* Add a new EditorHistory entry if it's not the same one */
-            if(editor_history.size() == 0 || !editor_history.get(editor_history.size() - 1).equals(entry)) editor_history.add(entry);
-            editor_history_ptr = editor_history.size() - 1;
+            if(editor_history.size() == 0 || !editor_history.get(editor_history.size() - 1).equals(entry)){
+                if(editor_history_ptr == editor_history.size()-1){
+                    editor_history_ptr++;
+                    editor_history.add(entry);
+                }
+                else{
+                    for(int i = editor_history.size() - 2; i >= editor_history_ptr; i--) editor_history.add(editor_history.get(i));
+                    editor_history.add(entry);
+                    editor_history_ptr = editor_history.size() - 1;
+                }
+            }
+            else editor_history_ptr++;
+            Log.d("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
         }
         static void undo(){
-            if(editor_history.size() == 0) return; /* Nothing to undo */
-            String[] entry = editor_history.get(editor_history_ptr).split(" ");
-            Thing t = s.things.get(Integer.parseInt(entry[0]));
-            String method = entry[1];
+            if(editor_history.size() == 0 || editor_history_ptr <= 0){
+                if(editor_history.size() > 0 && editor_history_ptr == 0) perform(editor_history.get(editor_history_ptr));
+                editor_history_ptr = -1;
+                editor_history.clear();
+                Log.d("History", "Nothing to undo");
+                return;
+            }
+            perform(editor_history.get(editor_history_ptr));
+            editor_history_ptr--;
+        }
+        static void perform(String entry){
+            String[] _entry = entry.split(" ");
+            Thing t = s.things.get(Integer.parseInt(_entry[0]));
+            String method = _entry[1];
             // args entry[2 ..]
             if(method.equals("SETCOORDS")){
-                int x = Integer.parseInt(entry[2]);
-                int y = Integer.parseInt(entry[3]);
+                int x = Integer.parseInt(_entry[2]);
+                int y = Integer.parseInt(_entry[3]);
                 t.setPosition(x, y);
-                editor_history_ptr--;
-                Log.d("History", "Undone");
             }
+            Log.d("History", "Performed " + method.toLowerCase());
         }
     }
 }
