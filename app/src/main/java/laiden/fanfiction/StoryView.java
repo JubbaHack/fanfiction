@@ -44,20 +44,33 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
     public static StoryView instance;
 
+    public static final Drawable ICON_ADD = MainActivity.instance.getResources().getDrawable(R.drawable.add);
+    public static final Drawable ICON_UNDO = MainActivity.instance.getResources().getDrawable(R.drawable.undo);
+    public static final Drawable ICON_REDO = MainActivity.instance.getResources().getDrawable(R.drawable.redo);
+    public static final Drawable ICON_SETTINGS = MainActivity.instance.getResources().getDrawable(R.drawable.settings);
+    public static final Drawable ICON_MENU = MainActivity.instance.getResources().getDrawable(R.drawable.menu);
+    public static final Drawable ICON_DASHBOARD = MainActivity.instance.getResources().getDrawable(R.drawable.dash);
+    public static final Drawable ICON_PLAY = MainActivity.instance.getResources().getDrawable(R.drawable.play);
+
+    public static RectF CONSOLE_RECT = new RectF();
+
     public StoryView(Context context) {
         super(context);
         instance = this;
         getHolder().addCallback(this);
         p = new Paint();
         p.setAntiAlias(true);
-        this.story = null;
-        this.thing = null;
-        this.scene = 0;
-        this.resize_corner = -1;
-        this.click = new PointF();
-        this.s = null;
+
+        story = null;
+        thing = null;
+        scene = 0;
+        resize_corner = -1;
+        click = new PointF();
+        s = null;
 
         //Drawable d = Drawable.createFromPath(pathName);
+
+        EditorHistory.updateui();
 
         this.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -77,7 +90,6 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     if (t.box().contains(x, y)) {
                         //t.onTouch(x, y);
 
-                        //Log.d("History", "SETCOORDS(" + t.getPosition().x + "," + t.getPosition().y + ")");
                         EditorHistory.add(t, "SETCOORDS", t.getPosition().x, t.getPosition().y);
 
                         if(thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
@@ -106,10 +118,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     }
 
                 }
-                RectF r = new RectF(500, 500, 600, 600);
-                if(r.contains(x, y)){
-                    EditorHistory.undo();
-                }
+                if     (ICON_UNDO.getBounds().contains((int)x, (int)y)) EditorHistory.undo();
+                else if(ICON_REDO.getBounds().contains((int)x, (int)y)) EditorHistory.redo();
             }
 
             if(!was_selected && resize_corner == -1) thing = null;
@@ -210,6 +220,20 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                                int height) {
         this.height = height;
         this.width = width;
+
+        CONSOLE_RECT.top = height - 100;
+        CONSOLE_RECT.left = 0;
+        CONSOLE_RECT.bottom = height;
+        CONSOLE_RECT.right = width;
+
+        final int d = 15;
+        final int s = 75;
+
+        ICON_ADD.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
+        ICON_UNDO.setBounds(s*1 + d + 10, height - s - d, s*2 + d + 10, height - d);
+        ICON_REDO.setBounds(s*2 + 45, height - s - d, s*3 + 45, height - d);
+        //ICON_ADD.setBounds(0, height - 100, 100, height);
+
     }
 
     @Override
@@ -251,6 +275,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     editor_history.add(entry);
                 }
                 else{
+                    if(editor_history_ptr == -1 && editor_history.size() > 1) editor_history_ptr++;
                     for(int i = editor_history.size() - 2; i >= editor_history_ptr; i--) editor_history.add(editor_history.get(i));
                     editor_history.add(entry);
                     editor_history_ptr = editor_history.size() - 1;
@@ -258,10 +283,16 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             }
             else editor_history_ptr++;
             Log.d("History", "Size: " + editor_history.size() + ", ptr: " + editor_history_ptr);
+            updateui();
+        }
+        static void redo(){
+            perform(editor_history.get(editor_history_ptr));
+            editor_history_ptr++;
+
+            updateui();
         }
         static void undo(){
-            if(editor_history.size() == 0 || editor_history_ptr <= 0){
-                if(editor_history.size() > 0 && editor_history_ptr == 0) perform(editor_history.get(editor_history_ptr));
+            if(editor_history.size() == 0 || editor_history_ptr < 0){
                 editor_history_ptr = -1;
                 editor_history.clear();
                 Log.d("History", "Nothing to undo");
@@ -269,18 +300,34 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             }
             perform(editor_history.get(editor_history_ptr));
             editor_history_ptr--;
+
+            updateui();
         }
-        static void perform(String entry){
+        static void perform(String entry) {
             String[] _entry = entry.split(" ");
             Thing t = s.things.get(Integer.parseInt(_entry[0]));
             String method = _entry[1];
             // args entry[2 ..]
-            if(method.equals("SETCOORDS")){
+            if (method.equals("SETCOORDS")) {
                 int x = Integer.parseInt(_entry[2]);
                 int y = Integer.parseInt(_entry[3]);
                 t.setPosition(x, y);
             }
             Log.d("History", "Performed " + method.toLowerCase());
+
+        }
+        static void updateui() {
+            if (editor_history.size() == 0) {
+                ICON_UNDO.setAlpha(120);
+                ICON_REDO.setAlpha(120);
+            }
+            else if (editor_history_ptr < 0) {
+                ICON_UNDO.setAlpha(120);
+                ICON_REDO.setAlpha(255);
+            } else if (editor_history_ptr == editor_history.size() - 1) {
+                ICON_UNDO.setAlpha(255);
+                ICON_REDO.setAlpha(120);
+            }
         }
     }
 }
