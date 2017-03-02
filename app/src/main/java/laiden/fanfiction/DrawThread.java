@@ -75,7 +75,6 @@ class DrawThread extends Thread{
             }
             finally {
                 if (canvas != null) {
-                    // отрисовка выполнена. выводим результат на экран
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }
             }
