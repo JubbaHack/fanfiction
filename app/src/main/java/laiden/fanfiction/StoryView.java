@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import laiden.fanfiction.project.Scene;
@@ -32,7 +34,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     private static PointF click;
     private static boolean doubleclick = false;
     private static long doubleclick_time = 0;
-
+    private static ArrayList<String> editor_history = new ArrayList<>();
+    private static int editor_history_ptr = 0;
 
     private static Paint p;
     public static int width;
@@ -71,6 +74,9 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     if (t.box().contains(x, y)) {
                         //t.onTouch(x, y);
 
+                        //Log.d("History", "SETCOORDS(" + t.getPosition().x + "," + t.getPosition().y + ")");
+                        EditorHistory.add(t, "SETCOORDS", t.getPosition().x, t.getPosition().y);
+
                         if(thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
 
                             DialogWindow alert = new DialogWindow();
@@ -93,6 +99,10 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                         break;
                     }
 
+                }
+                RectF r = new RectF(500, 500, 600, 600);
+                if(r.contains(x, y)){
+                    EditorHistory.undo();
                 }
             }
 
@@ -152,6 +162,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         }
         else if(event == MotionEvent.ACTION_UP){
             resize_corner = -1;
+            if(thing != null) EditorHistory.add(thing, "SETCOORDS", thing.getPosition().x, thing.getPosition().y);
+
         }
     }
     static LinkedList<Long> times = new LinkedList<Long>(){{
@@ -212,6 +224,36 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                 retry = false;
             } catch (InterruptedException e) {
                 // если не получилось, то будем пытаться еще и еще
+            }
+        }
+    }
+    static final class EditorHistory {
+
+        static void add(Thing t, String method, Object... params){
+            int index = s.things.indexOf(t);
+            String p = "";
+            for(Object _p: params) p += _p.toString() + " ";
+            p = p.trim();
+            String entry = index + " " + method + " " + p;
+
+            Log.d("History", entry);
+
+            /* Add a new EditorHistory entry if it's not the same one */
+            if(editor_history.size() == 0 || !editor_history.get(editor_history.size() - 1).equals(entry)) editor_history.add(entry);
+            editor_history_ptr = editor_history.size() - 1;
+        }
+        static void undo(){
+            if(editor_history.size() == 0) return; /* Nothing to undo */
+            String[] entry = editor_history.get(editor_history_ptr).split(" ");
+            Thing t = s.things.get(Integer.parseInt(entry[0]));
+            String method = entry[1];
+            // args entry[2 ..]
+            if(method.equals("SETCOORDS")){
+                int x = Integer.parseInt(entry[2]);
+                int y = Integer.parseInt(entry[3]);
+                t.setPosition(x, y);
+                editor_history_ptr--;
+                Log.d("History", "Undone");
             }
         }
     }

@@ -71,6 +71,8 @@ class DrawThread extends Thread{
                     }
 
                     canvas.drawText("visible things: " + drawables.size() + ", " + (int)(StoryView.fps()) + "fps", 10, StoryView.height-10, debug_paint);
+                    RectF r = new RectF(500, 500, 600, 600);
+                    canvas.drawRect(r, debug_paint);
                 }
             }
             finally {
