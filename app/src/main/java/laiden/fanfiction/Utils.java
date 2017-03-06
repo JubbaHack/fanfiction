@@ -10,6 +10,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public final class Utils {
+    public static float ndp(float v){
+        return (v*MainActivity.density)/StoryView.d;
+    }
     public static String readFile(File file) throws Exception {
         FileInputStream stream = new FileInputStream(file);
         String string = convertStreamToString(stream);

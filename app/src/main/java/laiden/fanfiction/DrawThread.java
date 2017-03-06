@@ -46,7 +46,7 @@ class DrawThread extends Thread{
             try {
                 final Paint debug_paint = new Paint();
                 debug_paint.setAntiAlias(true);
-                debug_paint.setTextSize(30);
+                debug_paint.setTextSize(Utils.ndp(30));
                 debug_paint.setColor(Color.WHITE);
 
                 ArrayList<RectF> drawn_boxes = new ArrayList<>();
@@ -91,7 +91,7 @@ class DrawThread extends Thread{
                                 canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
 
                                 debug_paint.setColor(Color.WHITE);
-                                debug_paint.setTextSize(40);
+                                debug_paint.setTextSize(Utils.ndp(40));
                                 StoryView.ICON_DELETE.draw(canvas);
                                 canvas.drawText("Remove", 100, StoryView.height - 37, debug_paint);
                             } else {

@@ -27,6 +27,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     private DrawThread drawThread;
     private static final int DOUBLECLICK = 300;
 
+    public static final float d = 1.75f;
     public static Story story; // todo make fields private
     public static Scene s;
     public static Thing thing;
@@ -61,6 +62,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
     public StoryView(Context context) {
         super(context);
+        Log.d("Density", MainActivity.density + "");
         instance = this;
         getHolder().addCallback(this);
         p = new Paint();

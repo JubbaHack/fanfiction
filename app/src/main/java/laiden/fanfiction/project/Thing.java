@@ -14,10 +14,12 @@ import android.text.TextPaint;
 
 import java.util.ArrayList;
 
+import laiden.fanfiction.Utils;
+
 public class Thing {
 
-    private static final int DEFAULT_W = 250;
-    private static final int DEFAULT_H = 100;
+    private static final int DEFAULT_W = (int)Utils.ndp(250);
+    private static final int DEFAULT_H = (int)Utils.ndp(100);
     private static final int DEFAULT_X = 10;
     private static final int DEFAULT_Y = 10;
 
@@ -93,7 +95,7 @@ public class Thing {
         canvas.drawRect(_r, _p);
 
         _p.setColor(Color.parseColor(text_color));
-        _p.setTextSize(30.0f);
+        _p.setTextSize(Utils.ndp(30.0f));
 
         _tp = new TextPaint(_p);
         _sl = new StaticLayout(text, _tp, w, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
@@ -131,7 +133,7 @@ public class Thing {
         for(RectF r: getResizerRects()) drawResizer(c, r);
     }
     private RectF centerRect(float x, float y){
-        final float size = 14.0f;
+        final float size = Utils.ndp(14.0f);
         return new RectF(x - size/2, y - size/2, x+size/2, y+size/2);
     }
     private void drawResizer(Canvas canvas, RectF r){
