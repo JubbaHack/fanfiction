@@ -54,7 +54,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     public static final Drawable ICON_DASHBOARD = MainActivity.instance.getResources().getDrawable(R.drawable.dash);
     public static final Drawable ICON_PLAY = MainActivity.instance.getResources().getDrawable(R.drawable.play);
     public static final Drawable ICON_DELETE = MainActivity.instance.getResources().getDrawable(R.drawable.delete);
-    public static final Drawable ICON_DELETE_BLACK = MainActivity.instance.getResources().getDrawable(R.drawable.delete_black);
+    //public static final Drawable ICON_DELETE_BLACK = MainActivity.instance.getResources().getDrawable(R.drawable.delete_black);
     public static final Drawable ICON_COPY = MainActivity.instance.getResources().getDrawable(R.drawable.copy);
 
     public static RectF CONSOLE_RECT = new RectF();
@@ -252,7 +252,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
         ICON_ADD.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
         ICON_COPY.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
-        ICON_DELETE_BLACK.setBounds((width/2)-40, height - s - d, (width/2)+40, height - d);
+        //ICON_DELETE_BLACK.setBounds((width/2)-40, height - s - d, (width/2)+40, height - d);
         ICON_UNDO.setBounds(s*1 + d + 10, height - s - d, s*2 + d + 10, height - d);
         ICON_REDO.setBounds(s*2 + 45, height - s - d, s*3 + 45, height - d);
 
