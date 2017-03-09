@@ -6,10 +6,29 @@ import android.graphics.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 public final class Utils {
+    public static boolean copyFile(File source, File destination) {
+        if(source.getAbsolutePath().equals(destination.getAbsolutePath())) return true;
+        else {
+            try {
+                InputStream is = new FileInputStream(source);
+                OutputStream os = new FileOutputStream(destination);
+                byte[] buff = new byte[1024];
+                int len;
+                while ((len = is.read(buff)) > 0) os.write(buff, 0, len);
+                is.close();
+                os.close();
+            }
+            catch (IOException ignored) {}
+        }
+        return true;
+    }
     public static float ndp(float v){
         return (v*MainActivity.density)/StoryView.d;
     }

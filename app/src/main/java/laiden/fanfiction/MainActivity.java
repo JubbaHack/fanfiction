@@ -16,6 +16,7 @@ import laiden.fanfiction.project.Story;
 public class MainActivity extends AppCompatActivity {
     StoryView storyView;
     public static MainActivity instance;
+    public static String package_name;
     public static float density;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void init(){
         instance = this;
+        package_name = getApplicationContext().getPackageName();
         density = getResources().getDisplayMetrics().density;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
