@@ -207,6 +207,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             moving = false;
             if(thing != null && thing.box().intersect(CONSOLE_RECT)){
                 s.things.remove(thing);
+                thing = null;
             }
             if(thing != null) EditorHistory.add(thing, "SETCOORDS", thing.getPosition().x, thing.getPosition().y);
 
@@ -256,7 +257,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         ICON_COPY.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
         //ICON_DELETE_BLACK.setBounds((width/2)-40, height - s - d, (width/2)+40, height - d);
         ICON_UNDO.setBounds(s*1 + d + 10, height - s - d, s*2 + d + 10, height - d);
-        ICON_REDO.setBounds(s*2 + 45, height - s - d, s*3 + 45, height - d);
+        ICON_REDO.setBounds(s*2 + d + 20, height - s - d, s*3 + d + 20, height - d);
 
         ICON_DELETE.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
 
