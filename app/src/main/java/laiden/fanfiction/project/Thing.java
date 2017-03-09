@@ -14,6 +14,7 @@ import android.text.TextPaint;
 
 import java.util.ArrayList;
 
+import laiden.fanfiction.ResourceManager;
 import laiden.fanfiction.Utils;
 
 public class Thing {
@@ -39,7 +40,7 @@ public class Thing {
     private int x;
     private int y;
 
-    private String background_color;
+    private String background;
     private String text_color;
     private String text;
 
@@ -54,7 +55,7 @@ public class Thing {
         this.h                = DEFAULT_H;
         this.x                = DEFAULT_X;
         this.y                = DEFAULT_Y;
-        this.background_color = DEFAULT_BC;
+        this.background       = DEFAULT_BC;
         this.text_color       = DEFAULT_TC;
         this.text             = DEFAULT_T;
         this.index            = -1;
@@ -91,7 +92,7 @@ public class Thing {
         _r = box();
 
         _p.setStyle(Paint.Style.FILL);
-        _p.setColor(Color.parseColor(background_color)); //todo res parser
+        _p.setColor(ResourceManager.color(background)); //todo res parser
         canvas.drawRect(_r, _p);
 
         _p.setColor(Color.parseColor(text_color));

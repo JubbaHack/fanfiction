@@ -80,8 +80,8 @@ public final class StoryManager {
                 Uri horse_link = Uri.parse("android.resource://" + MainActivity.package_name + "/" + R.drawable.horse);
                 File horse = new File(horse_link.getPath());
                 File horse_c = new File(resources_dir.getPath() + "/" + "horse.png");
-                Utils.copyFile(horse, horse_c);
-                if(!horse_c.exists()){
+
+                if(!Utils.copyFile(horse, horse_c) && !horse_c.isFile()){
                     Log.d("StoryManager", "Cannot create a horse resource.");
                     return ErrorType.ERROR;
                 }
