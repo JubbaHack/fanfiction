@@ -19,10 +19,10 @@ public final class StoryManager {
 
     private static final String STORIES_DIRECTORY   = "stories";
     private static final String STORY_FILE          = "story.json";
-    private static final String RESOURCES_DIRECTORY = "resources";
+    public static final String RESOURCES_DIRECTORY = "resources";
 
-    private static File files;
-    private static File stories;
+    public static File files;
+    public static File stories;
     private static Gson gson;
 
     static {
@@ -72,16 +72,15 @@ public final class StoryManager {
         else {
             if(storydir.mkdir()){
                 File resources_dir = new File(storydir.getPath() + "/" + RESOURCES_DIRECTORY);
+
                 if(!resources_dir.mkdir()){
                     Log.d("StoryManager", "Cannot create '" + name + "/" + RESOURCES_DIRECTORY + "' directory.");
                     return ErrorType.ERROR;
                 }
 
-                Uri horse_link = Uri.parse("android.resource://" + MainActivity.package_name + "/" + R.drawable.horse);
-                File horse = new File(horse_link.getPath());
-                File horse_c = new File(resources_dir.getPath() + "/" + "horse.png");
+                File horse = new File(resources_dir.getPath() + "/" + "horse.png");
 
-                if(!Utils.copyFile(horse, horse_c) && !horse_c.isFile()){
+                if(!Utils.copyResource(R.drawable.horse, horse) || !horse.isFile()){
                     Log.d("StoryManager", "Cannot create a horse resource.");
                     return ErrorType.ERROR;
                 }

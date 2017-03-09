@@ -13,21 +13,19 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public final class Utils {
-    public static boolean copyFile(File source, File destination) {
-        if(source.getAbsolutePath().equals(destination.getAbsolutePath())) return true;
-        else {
-            try {
-                InputStream is = new FileInputStream(source);
-                OutputStream os = new FileOutputStream(destination);
-                byte[] buff = new byte[1024];
-                int len;
-                while ((len = is.read(buff)) > 0) os.write(buff, 0, len);
-                is.close();
-                os.close();
-            }
-            catch (IOException ignored) {}
+    public static boolean copyResource(int id, File destination) {
+        try {
+            int len;
+            InputStream  is = MainActivity.instance.getResources().openRawResource(id);
+            OutputStream os = new FileOutputStream(destination);
+            byte buffer[]   = new byte[1024];
+            while((len = is.read(buffer)) > 0) os.write(buffer, 0, len);
+            os.close();
+            is.close();
+            return true;
         }
-        return true;
+        catch (IOException ignored){}
+        return false;
     }
     public static float ndp(float v){
         return (v*MainActivity.density)/StoryView.d;

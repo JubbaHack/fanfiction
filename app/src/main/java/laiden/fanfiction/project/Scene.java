@@ -20,11 +20,12 @@ public class Scene {
         things = new ArrayList<Thing>();
         this.background = DEFAULT_B;
 
-        for(int i = 1; i <= THING_LIMIT/2; i++){
-            Thing t = new Thing();
-            t.setText("Lorem ipsum dolor sit amet, per temporibus reprehendunt te, choro graecis vivendum ad per. Privet Nastya. No quo probo primis. Mauris convallis ante sed felis malesuada dapibus. Vivamus ut arcu tellus. #" + i);
-            add(t);
-        }
+
+        Thing t = new Thing();
+        t.setText("Lorem ipsum dolor sit amet, per temporibus reprehendunt te, choro graecis vivendum ad per. Privet Nastya. No quo probo primis. Mauris convallis ante sed felis malesuada dapibus. Vivamus ut arcu tellus.");
+        t.setBackground("horse.png");
+        add(t);
+
 
     }
     public boolean addable(){

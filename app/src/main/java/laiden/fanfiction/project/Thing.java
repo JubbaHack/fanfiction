@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -15,6 +16,7 @@ import android.text.TextPaint;
 import java.util.ArrayList;
 
 import laiden.fanfiction.ResourceManager;
+import laiden.fanfiction.StoryView;
 import laiden.fanfiction.Utils;
 
 public class Thing {
@@ -81,37 +83,50 @@ public class Thing {
     public RectF box(){
         return new RectF(x, y, x+w, y+h);
     }
+    public Rect box_int(){
+        return new Rect(x, y, x+w, y+h);
+    }
     public int resizeFrom(float x, float y){ /* try resizing */
         for(RectF r: getResizerRects()){
             if(inflatedRect(r, Utils.ndp(15)).contains(x, y)) return getResizerRects().indexOf(r);
         }
         return -1;
     }
+    public void setBackground(String b){
+        this.background = b;
+
+    }
     public void render(Canvas canvas, boolean sel){
 
-        _r = box();
+        if(!ResourceManager.isResource(background)){
+            _r = box();
+            _p.setStyle(Paint.Style.FILL);
+            _p.setColor(ResourceManager.color(background));
+            canvas.drawRect(_r, _p);
 
-        _p.setStyle(Paint.Style.FILL);
-        _p.setColor(ResourceManager.color(background)); //todo res parser
-        canvas.drawRect(_r, _p);
+            _p.setColor(Color.parseColor(text_color));
+            _p.setTextSize(Utils.ndp(30.0f));
 
-        _p.setColor(Color.parseColor(text_color));
-        _p.setTextSize(Utils.ndp(30.0f));
+            _tp = new TextPaint(_p);
+            _sl = new StaticLayout(text, _tp, w, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+            canvas.save();
+            canvas.clipRect(_r);
+            canvas.translate(x, y);
+            _sl.draw(canvas);
+            canvas.restore();
 
-        _tp = new TextPaint(_p);
-        _sl = new StaticLayout(text, _tp, w, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-        canvas.save();
-        canvas.clipRect(_r);
-        canvas.translate(x, y);
-        _sl.draw(canvas);
-        canvas.restore();
+            _sl = null;
 
-        _sl = null;
-
-        _p.setStyle(Paint.Style.STROKE);
-        _p.setStrokeWidth(Utils.ndp(2));
-        _p.setColor(Color.BLACK);
-        canvas.drawRect(_r, _p);
+            _p.setStyle(Paint.Style.STROKE);
+            _p.setStrokeWidth(Utils.ndp(2));
+            _p.setColor(Color.BLACK);
+            canvas.drawRect(_r, _p);
+        }
+        else {
+            Drawable d = StoryView.instance.drawables.get(background);
+            d.setBounds(box_int());
+            d.draw(canvas);
+        }
 
         if(sel) drawResizers(canvas);
     }

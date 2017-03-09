@@ -16,8 +16,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import laiden.fanfiction.project.Scene;
 import laiden.fanfiction.project.Story;
@@ -38,6 +41,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     private static long doubleclick_time = 0;
     private static ArrayList<String> editor_history = new ArrayList<>();
     private static int editor_history_ptr = -1;
+
+    public Map<String, Drawable> drawables;
 
     public static boolean moving = false;
 
@@ -68,14 +73,13 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         p = new Paint();
         p.setAntiAlias(true);
 
+        drawables = new HashMap<>();
         story = null;
         thing = null;
         scene = 0;
         resize_corner = -1;
         click = new PointF();
         s = null;
-
-        /*Drawable d = Drawable.createFromPath(pathName);*/
 
         EditorHistory.updateui();
 
@@ -86,6 +90,14 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                 return true;
             }
         });
+    }
+    private void updateDrawables(){
+        drawables.clear();
+        for(File resource: ResourceManager.resources.listFiles()){
+            Drawable d = Drawable.createFromPath(resource.getPath());
+            String   s = resource.getName();
+            drawables.put(s, d);
+        }
     }
     private void onTouch(float x, float y, int event){
         if(event == MotionEvent.ACTION_DOWN) {
@@ -234,6 +246,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     public void play(Story s){
 
         this.story = s;
+        updateDrawables();
         this.s = this.story.scenes.get(scene);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             MainActivity.instance.getWindow().setNavigationBarColor(Color.parseColor(this.s.background));
