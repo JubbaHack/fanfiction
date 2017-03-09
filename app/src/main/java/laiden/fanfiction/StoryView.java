@@ -244,13 +244,13 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         this.height = height;
         this.width = width;
 
-        CONSOLE_RECT.top = height - 100;
+        CONSOLE_RECT.top = height - Utils.ndp(100);
         CONSOLE_RECT.left = 0;
         CONSOLE_RECT.bottom = height;
         CONSOLE_RECT.right = width;
 
-        final int d = 15;
-        final int s = 75;
+        final int d = (int)Utils.ndp(15);
+        final int s = (int)Utils.ndp(75);
 
         ICON_ADD.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
         ICON_COPY.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);

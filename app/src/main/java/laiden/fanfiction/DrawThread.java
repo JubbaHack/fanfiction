@@ -93,7 +93,7 @@ class DrawThread extends Thread{
                                 debug_paint.setColor(Color.WHITE);
                                 debug_paint.setTextSize(Utils.ndp(40));
                                 StoryView.ICON_DELETE.draw(canvas);
-                                canvas.drawText("Remove", 100, StoryView.height - 37, debug_paint);
+                                canvas.drawText("Remove", Utils.ndp(100), StoryView.height - Utils.ndp(37), debug_paint);
                             } else {
                                 canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
                                 if (StoryView.thing != null) StoryView.ICON_COPY.draw(canvas);

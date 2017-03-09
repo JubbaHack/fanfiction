@@ -82,7 +82,7 @@ public class Thing {
     }
     public int resizeFrom(float x, float y){ /* try resizing */
         for(RectF r: getResizerRects()){
-            if(inflatedRect(r, 15).contains(x, y)) return getResizerRects().indexOf(r);
+            if(inflatedRect(r, Utils.ndp(15)).contains(x, y)) return getResizerRects().indexOf(r);
         }
         return -1;
     }
@@ -108,7 +108,7 @@ public class Thing {
         _sl = null;
 
         _p.setStyle(Paint.Style.STROKE);
-        _p.setStrokeWidth(2);
+        _p.setStrokeWidth(Utils.ndp(2));
         _p.setColor(Color.BLACK);
         canvas.drawRect(_r, _p);
 
@@ -143,7 +143,7 @@ public class Thing {
         canvas.drawRect(r, _p);
 
         _p.setStyle(Paint.Style.STROKE);
-        _p.setStrokeWidth(2);
+        _p.setStrokeWidth(Utils.ndp(2));
         _p.setColor(Color.BLACK);
         canvas.drawRect(r, _p);
 
