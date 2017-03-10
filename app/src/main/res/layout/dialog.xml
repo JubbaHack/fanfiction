@@ -57,7 +57,7 @@
         android:layout_height="45dp"
         android:elevation="0dp"
         android:adjustViewBounds="false"
-        android:scaleX=".75"
-        android:scaleY=".75" />
+        android:scaleX=".65"
+        android:scaleY=".65" />
 
 </RelativeLayout>
