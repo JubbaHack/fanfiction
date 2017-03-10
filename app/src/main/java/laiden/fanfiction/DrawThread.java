@@ -52,9 +52,13 @@ class DrawThread extends Thread{
                 ArrayList<RectF> drawn_boxes = new ArrayList<>();
                 ArrayList<Thing> drawables = new ArrayList<>();
 
+
+
                 canvas = surfaceHolder.lockCanvas(null);
                 if(canvas != null && StoryView.s != null && StoryView.s.things != null) synchronized (surfaceHolder) {
                     if(StoryView.s != null) {
+
+
                         canvas.drawColor(Color.parseColor(StoryView.s.background)); // todo: add a resource parser: background can be image or color
 
                         for (int i = StoryView.s.things.size() - 1; i >= 0; i--) {
@@ -75,32 +79,38 @@ class DrawThread extends Thread{
                         }
                         //canvas.drawText("visible things: " + drawables.size() + ", " + (int)(StoryView.fps()) + "fps", 10, StoryView.height-10, debug_paint);
 
-                        if (StoryView.s.addable()) StoryView.ICON_COPY.setAlpha(255);
-                        else StoryView.ICON_COPY.setAlpha(127);
 
-                        if (!StoryView.moving) {
-                            canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
-                            if (StoryView.thing != null) StoryView.ICON_COPY.draw(canvas);
-                            else StoryView.ICON_ADD.draw(canvas);
-                            StoryView.ICON_UNDO.draw(canvas);
-                            StoryView.ICON_REDO.draw(canvas);
-                        } else {
-                            if (StoryView.thing.box().intersect(StoryView.CONSOLE_RECT)) {
-                                debug_paint.setColor(Color.RED);
-                                debug_paint.setTypeface(Typeface.DEFAULT_BOLD);
-                                canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
+                        if (StoryView.s != null) {
+                            if (StoryView.s.addable()) StoryView.ICON_COPY.setAlpha(255);
+                            else StoryView.ICON_COPY.setAlpha(127);
 
-                                debug_paint.setColor(Color.WHITE);
-                                debug_paint.setTextSize(Utils.ndp(40));
-                                StoryView.ICON_DELETE.draw(canvas);
-                                canvas.drawText("Remove", Utils.ndp(100), StoryView.height - Utils.ndp(37), debug_paint);
-                            } else {
+
+                            if (!StoryView.moving) {
                                 canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
                                 if (StoryView.thing != null) StoryView.ICON_COPY.draw(canvas);
                                 else StoryView.ICON_ADD.draw(canvas);
                                 StoryView.ICON_UNDO.draw(canvas);
                                 StoryView.ICON_REDO.draw(canvas);
+                            } else {
+                                if (StoryView.thing.box().intersect(StoryView.CONSOLE_RECT)) {
+                                    debug_paint.setColor(Color.RED);
+                                    debug_paint.setTypeface(Typeface.DEFAULT_BOLD);
+                                    canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
+
+                                    debug_paint.setColor(Color.WHITE);
+                                    debug_paint.setTextSize(Utils.ndp(40));
+                                    StoryView.ICON_DELETE.draw(canvas);
+                                    canvas.drawText("Remove", Utils.ndp(100), StoryView.height - Utils.ndp(37), debug_paint);
+                                } else {
+                                    canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
+                                    if (StoryView.thing != null) StoryView.ICON_COPY.draw(canvas);
+                                    else StoryView.ICON_ADD.draw(canvas);
+                                    StoryView.ICON_UNDO.draw(canvas);
+                                    StoryView.ICON_REDO.draw(canvas);
+                                }
                             }
+
+
                         }
                     }
                 }

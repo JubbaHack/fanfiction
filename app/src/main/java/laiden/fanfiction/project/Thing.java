@@ -88,7 +88,7 @@ public class Thing {
     }
     public int resizeFrom(float x, float y){ /* try resizing */
         for(RectF r: getResizerRects()){
-            if(inflatedRect(r, Utils.ndp(15)).contains(x, y)) return getResizerRects().indexOf(r);
+            if(Utils.inflatedRect(r, Utils.ndp(15)).contains(x, y)) return getResizerRects().indexOf(r);
         }
         return -1;
     }
@@ -142,9 +142,7 @@ public class Thing {
             a.add(centerRect(x+w, y+h));
         return a;
     }
-    private RectF inflatedRect(RectF r, float d){
-        return new RectF(r.left - d, r.top - d, r.right + d*2, r.bottom + d*2);
-    }
+
     private void drawResizers(Canvas c){
         for(RectF r: getResizerRects()) drawResizer(c, r);
     }

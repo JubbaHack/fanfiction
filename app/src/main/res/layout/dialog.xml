@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -34,13 +35,29 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="120dp"
         android:id="@+id/a"
         android:gravity="center"
         android:background="#DA5F6A"
         android:scaleType="fitCenter"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_height="45dp" />
+
+    <ImageButton
+        android:layout_width="45dp"
+        app:srcCompat="@drawable/back"
+        android:id="@+id/imageButton"
+        android:background="@android:color/transparent"
+        android:scaleType="fitStart"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/a"
+        android:layout_height="45dp"
+        android:elevation="0dp"
+        android:adjustViewBounds="false"
+        android:scaleX=".75"
+        android:scaleY=".75" />
 
 </RelativeLayout>

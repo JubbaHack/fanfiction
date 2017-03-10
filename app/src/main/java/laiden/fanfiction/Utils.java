@@ -2,6 +2,8 @@ package laiden.fanfiction;
 
 
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.RectF;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +15,35 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public final class Utils {
+    public static Rect inflatedRect(int a, int b, int c, int d, float f){
+        Rect r = new Rect(a, b, c, d);
+        return scaleRect(r, f);
+    }
+    public static Rect scaleRect(Rect rect, float factor){
+
+        Rect r = new Rect(rect.left, rect.top, rect.right, rect.bottom);
+
+        float diffHorizontal = (r.right-r.left) * (factor-1f);
+        float diffVertical = (r.bottom-r.top) * (factor-1f);
+
+
+        r.top -= diffVertical/2f;
+        r.bottom += diffVertical/2f;
+
+        r.left -= diffHorizontal/2f;
+        r.right += diffHorizontal/2f;
+
+        return r;
+    }
+    public static Rect deflatedRect(Rect r, float d){
+        return new Rect((int)(r.left - d), (int)(r.top - d), (int)(r.right + d*2), (int)(r.bottom + d*2));
+    }
+    public static RectF inflatedRect(RectF r, float d){
+        return new RectF((r.left - d), (r.top - d), (r.right + d*2), (r.bottom + d*2));
+    }
+    public static Rect inflatedRect(Rect r, float d){
+        return new Rect((int)(r.left - d), (int)(r.top - d), (int)(r.right + d*2), (int)(r.bottom + d*2));
+    }
     public static boolean copyResource(int id, File destination) {
         try {
             int len;

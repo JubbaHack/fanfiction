@@ -114,8 +114,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
                         if(thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
 
-                            //DialogWindow alert = new DialogWindow();
-                            //alert.showDialog(MainActivity.instance, "Text");
+                            DialogWindow alert = new DialogWindow();
+                            alert.showDialog(MainActivity.instance, "Text");
 
                             //ProjectSettingsWindow alert = new ProjectSettingsWindow();
                             //alert.showDialog(MainActivity.instance, "Text");
@@ -140,11 +140,11 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                 }
 
                 if(!moving){
-                    if (ICON_UNDO.getBounds().contains((int)x, (int)y)) EditorHistory.undo();
-                    else if(ICON_REDO.getBounds().contains((int)x, (int)y)) EditorHistory.redo();
+                    if (Utils.scaleRect(ICON_UNDO.getBounds(), 1.75f).contains((int)x, (int)y)) EditorHistory.undo();
+                    else if(Utils.scaleRect(ICON_REDO.getBounds(), 1.75f).contains((int)x, (int)y)) EditorHistory.redo();
                 }
 
-                if(thing != null && !was_selected && ICON_COPY.getBounds().contains((int)x, (int)y)){
+                if(thing != null && !was_selected && Utils.scaleRect(ICON_COPY.getBounds(), 1.75f).contains((int)x, (int)y)){
                     if(s.addable()){
                         Thing _t = new Thing();
                         _t.setBox(thing.box());
@@ -266,14 +266,17 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         final int d = (int)Utils.ndp(15);
         final int s = (int)Utils.ndp(75);
 
-        ICON_ADD.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
-        ICON_COPY.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
+
+
+
+        ICON_ADD.setBounds(Utils.inflatedRect(s*0 + d, height - s - d, s*1 + d, height - d, 0.75f));
+        //ICON_ADD.
+        ICON_COPY.setBounds(Utils.inflatedRect(s*0 + d, height - s - d, s*1 + d, height - d, 0.75f));
         //ICON_DELETE_BLACK.setBounds((width/2)-40, height - s - d, (width/2)+40, height - d);
-        ICON_UNDO.setBounds(s*1 + d + 10, height - s - d, s*2 + d + 10, height - d);
-        ICON_REDO.setBounds(s*2 + d + 20, height - s - d, s*3 + d + 20, height - d);
+        ICON_UNDO.setBounds(Utils.inflatedRect(s*1 + d + 10, height - s - d, s*2 + d + 10, height - d, 0.75f));
+        ICON_REDO.setBounds(Utils.inflatedRect(s*2 + d + 20, height - s - d, s*3 + d + 20, height - d, 0.75f));
 
-        ICON_DELETE.setBounds(s*0 + d, height - s - d, s*1 + d, height - d);
-
+        ICON_DELETE.setBounds(Utils.inflatedRect(s*0 + d, height - s - d, s*1 + d, height - d, 0.75f));
     }
 
     @Override
