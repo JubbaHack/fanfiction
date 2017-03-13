@@ -18,8 +18,8 @@ public class DialogWindow{
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog);
 
-        TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
-        text.setText(msg);
+        //TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
+        //text.setText(msg);
 
         Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
         dialogButton.setOnClickListener(new View.OnClickListener() {
