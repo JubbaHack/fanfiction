@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -30,6 +31,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     private DrawThread drawThread;
     private static final int DOUBLECLICK = 300;
 
+    public static PointF touch = new PointF();
     public static final float d = 1.75f;
     public static Story story; // todo make fields private
     public static Scene s;
@@ -100,6 +102,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
     private void onTouch(float x, float y, int event){
+        touch.x = x;
+        touch.y = y;
         if(event == MotionEvent.ACTION_DOWN) {
 
             boolean was_selected = false;
@@ -144,7 +148,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     else if(Utils.scaleRect(ICON_REDO.getBounds(), 1.75f).contains((int)x, (int)y)) EditorHistory.redo();
                 }
 
-                if(thing != null && !was_selected && Utils.scaleRect(ICON_COPY.getBounds(), 1.75f).contains((int)x, (int)y)){
+                if(thing != null && CONSOLE_RECT.contains(x, y)){
                     if(s.addable()){
                         Thing _t = new Thing();
                         _t.setBox(thing.box());

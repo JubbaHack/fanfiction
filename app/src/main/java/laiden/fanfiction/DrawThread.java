@@ -92,7 +92,7 @@ class DrawThread extends Thread{
                                 StoryView.ICON_UNDO.draw(canvas);
                                 StoryView.ICON_REDO.draw(canvas);
                             } else {
-                                if (StoryView.thing.box().intersect(StoryView.CONSOLE_RECT)) {
+                                if (StoryView.CONSOLE_RECT.contains(StoryView.touch.x, StoryView.touch.y)) {
                                     debug_paint.setColor(Color.RED);
                                     debug_paint.setTypeface(Typeface.DEFAULT_BOLD);
                                     canvas.drawRect(StoryView.CONSOLE_RECT, debug_paint);
