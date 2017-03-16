@@ -1,10 +1,12 @@
 package laiden.fanfiction;
 
 import android.app.ActivityManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     StoryView storyView;
     public static MainActivity instance;
     public static String package_name;
+    public static Vibrator vibrator;
     public static float density;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void init(){
         instance = this;
+        vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         package_name = getApplicationContext().getPackageName();
         density = getResources().getDisplayMetrics().density;
         requestWindowFeature(Window.FEATURE_NO_TITLE);

@@ -3,6 +3,7 @@ package laiden.fanfiction.project;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -30,6 +31,8 @@ public class Thing {
     private static transient RectF _r;
     private static transient TextPaint _tp;
     private static transient StaticLayout _sl;
+
+    public transient boolean invisible = false;
 
     private static final String DEFAULT_BC = "#FFFFFF";
     private static final String DEFAULT_TC = "#000000";
@@ -97,7 +100,16 @@ public class Thing {
 
     }
     public void render(Canvas canvas, boolean sel){
-
+        _p.setPathEffect(null);
+        if(this.invisible) {
+            _r = box();
+            _p.setColor(Color.WHITE);
+            _p.setStyle(Paint.Style.STROKE);
+            _p.setStrokeWidth(3);
+            _p.setPathEffect(new DashPathEffect(new float[] {10,20}, 0));
+            canvas.drawRect(_r, _p);
+            return;
+        }
         if(!ResourceManager.isResource(background)){
             _r = box();
             _p.setStyle(Paint.Style.FILL);
