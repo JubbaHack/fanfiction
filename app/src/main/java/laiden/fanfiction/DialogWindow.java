@@ -2,9 +2,11 @@ package laiden.fanfiction;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.media.Image;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
@@ -21,13 +23,13 @@ public class DialogWindow{
         //TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
         //text.setText(msg);
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.btn_dialog);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        ImageButton back = (ImageButton) dialog.findViewById(R.id.button_back);
+                    back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
 
         dialog.show();
 

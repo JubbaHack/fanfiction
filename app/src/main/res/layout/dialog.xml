@@ -20,7 +20,7 @@
     <ImageButton
         android:layout_width="45dp"
         app:srcCompat="@drawable/back"
-        android:id="@+id/imageButton"
+        android:id="@+id/button_back"
         android:background="@android:color/transparent"
         android:scaleType="fitStart"
         android:layout_alignParentTop="true"
@@ -32,33 +32,35 @@
         android:scaleX=".65"
         android:scaleY=".65" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="OK"
+        android:id="@+id/button_ok"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@android:color/holo_green_dark"
+        android:textColor="#ffffffff"
+        android:layout_below="@+id/text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/text"
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray"
-        android:layout_below="@+id/a"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="16dp"
         android:hint="Element text"
         android:paddingBottom="10dp"
-        android:layout_toRightOf="@+id/imageButton"
-        android:layout_toEndOf="@+id/imageButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="OK"
-        android:id="@+id/btn_dialog"
-        android:gravity="center_vertical|center_horizontal"
-        android:background="@android:color/holo_green_dark"
-        android:textColor="#ffffffff"
-        android:layout_below="@+id/editText2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="20dp" />
+        android:layout_below="@+id/a"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/button_back"
+        android:layout_toEndOf="@+id/button_back" />
 
     <RadioButton
         android:layout_width="wrap_content"
@@ -66,10 +68,9 @@
         android:buttonTint="@android:color/black"
         android:id="@+id/radioButton"
         android:textColor="@android:color/black"
-        android:layout_alignBaseline="@+id/editText2"
-        android:layout_alignBottom="@+id/editText2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp" />
+        android:layout_toStartOf="@+id/text"
+        android:layout_marginBottom="5dp"
+        android:layout_alignBottom="@+id/text"
+        android:layout_marginEnd="5dp" />
 
 </RelativeLayout>

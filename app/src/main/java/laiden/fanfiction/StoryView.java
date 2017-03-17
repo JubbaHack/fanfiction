@@ -2,12 +2,9 @@ package laiden.fanfiction;
 
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -48,7 +45,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
     public static boolean moving = false;
 
-    private static Paint p;
+    Paint p;
     public static int width;
     public static int height;
 
@@ -57,10 +54,10 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     public static final Drawable ICON_ADD = MainActivity.instance.getResources().getDrawable(R.drawable.add);
     public static final Drawable ICON_UNDO = MainActivity.instance.getResources().getDrawable(R.drawable.undo);
     public static final Drawable ICON_REDO = MainActivity.instance.getResources().getDrawable(R.drawable.redo);
-    public static final Drawable ICON_SETTINGS = MainActivity.instance.getResources().getDrawable(R.drawable.settings);
-    public static final Drawable ICON_MENU = MainActivity.instance.getResources().getDrawable(R.drawable.menu);
-    public static final Drawable ICON_DASHBOARD = MainActivity.instance.getResources().getDrawable(R.drawable.dash);
-    public static final Drawable ICON_PLAY = MainActivity.instance.getResources().getDrawable(R.drawable.play);
+    //public static final Drawable ICON_SETTINGS = MainActivity.instance.getResources().getDrawable(R.drawable.settings);
+    //public static final Drawable ICON_MENU = MainActivity.instance.getResources().getDrawable(R.drawable.menu);
+    //public static final Drawable ICON_DASHBOARD = MainActivity.instance.getResources().getDrawable(R.drawable.dash);
+    //public static final Drawable ICON_PLAY = MainActivity.instance.getResources().getDrawable(R.drawable.play);
     public static final Drawable ICON_DELETE = MainActivity.instance.getResources().getDrawable(R.drawable.delete);
     public static final Drawable ICON_COPY = MainActivity.instance.getResources().getDrawable(R.drawable.copy);
 
