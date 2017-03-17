@@ -107,12 +107,15 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             if(ICON_ADD.getBounds().contains((int)x, (int)y) && thing == null){
                 if(s.addable()){
                     Thing _t = new Thing();
-                    _t.setPosition(x, y);
+                    _t.setPosition(x, y - 180);
                     _t.invisible = true;
                     s.add(_t);
                     MainActivity.vibrator.vibrate(50);
 
                     thing = _t;
+                    click.x = x - _t.getPosition().x;
+                    click.y = y - _t.getPosition().y;
+                    moving = true;
                     return;
                 }
             }
@@ -229,7 +232,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         else if(event == MotionEvent.ACTION_UP){
-            if(thing != null && thing.box().intersect(CONSOLE_RECT) && resize_corner == -1){
+            if(thing != null && CONSOLE_RECT.contains(x, y) && resize_corner == -1){
                 s.things.remove(thing);
                 thing = null;
             }
