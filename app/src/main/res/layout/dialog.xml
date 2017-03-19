@@ -46,21 +46,19 @@
         android:layout_marginBottom="20dp" />
 
     <EditText
+        android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:id="@+id/text"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray"
-        android:layout_marginTop="16dp"
-        android:hint="Element text"
-        android:paddingBottom="10dp"
         android:layout_below="@+id/dialog_bar"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="16dp"
         android:layout_toRightOf="@+id/button_back"
-        android:layout_toEndOf="@+id/button_back" />
+        android:ems="10"
+        android:hint="Element text"
+        android:inputType="textMultiLine"
+        android:paddingBottom="10dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/darker_gray" />
 
     <RadioButton
         android:layout_width="wrap_content"
