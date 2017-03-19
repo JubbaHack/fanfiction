@@ -9,15 +9,14 @@ import android.os.Build;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
 import laiden.fanfiction.project.Story;
 
-public class MainActivity extends AppCompatActivity {
+public class App extends AppCompatActivity {
     StoryView storyView;
-    public static MainActivity instance;
+    public static App instance;
     public static String package_name;
     public static Vibrator vibrator;
     public static float density;
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             Bitmap i = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
             String s = storyView.story != null ? getString(R.string.app_name) + ": " + storyView.story.name : getString(R.string.app_name);
             ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(s, i, Utils.darker(Color.parseColor(storyView.s.background), 0.25f));
-            MainActivity.instance.setTaskDescription(taskDesc);
+            App.instance.setTaskDescription(taskDesc);
         }
     }
 }

@@ -1,10 +1,5 @@
 package laiden.fanfiction;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -26,7 +21,7 @@ public final class StoryManager {
     private static Gson gson;
 
     static {
-        files = MainActivity.instance.getFilesDir();
+        files = App.instance.getFilesDir();
         gson = new Gson();
         stories = new File(files.getPath() + "/" + STORIES_DIRECTORY);
         if(!stories.exists()) stories.mkdir();

@@ -47,7 +47,7 @@ public final class Utils {
     public static boolean copyResource(int id, File destination) {
         try {
             int len;
-            InputStream  is = MainActivity.instance.getResources().openRawResource(id);
+            InputStream  is = App.instance.getResources().openRawResource(id);
             OutputStream os = new FileOutputStream(destination);
             byte buffer[]   = new byte[1024];
             while((len = is.read(buffer)) > 0) os.write(buffer, 0, len);
@@ -59,7 +59,7 @@ public final class Utils {
         return false;
     }
     public static float ndp(float v){
-        return (v*MainActivity.density)/StoryView.d;
+        return (v* App.density)/StoryView.d;
     }
     public static String readFile(File file) throws Exception {
         FileInputStream stream = new FileInputStream(file);

@@ -51,21 +51,21 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
     public static StoryView instance;
 
-    public static final Drawable ICON_ADD = MainActivity.instance.getResources().getDrawable(R.drawable.add);
-    public static final Drawable ICON_UNDO = MainActivity.instance.getResources().getDrawable(R.drawable.undo);
-    public static final Drawable ICON_REDO = MainActivity.instance.getResources().getDrawable(R.drawable.redo);
-    //public static final Drawable ICON_SETTINGS = MainActivity.instance.getResources().getDrawable(R.drawable.settings);
-    //public static final Drawable ICON_MENU = MainActivity.instance.getResources().getDrawable(R.drawable.menu);
-    //public static final Drawable ICON_DASHBOARD = MainActivity.instance.getResources().getDrawable(R.drawable.dash);
-    //public static final Drawable ICON_PLAY = MainActivity.instance.getResources().getDrawable(R.drawable.play);
-    public static final Drawable ICON_DELETE = MainActivity.instance.getResources().getDrawable(R.drawable.delete);
-    public static final Drawable ICON_COPY = MainActivity.instance.getResources().getDrawable(R.drawable.copy);
+    public static final Drawable ICON_ADD = App.instance.getResources().getDrawable(R.drawable.add);
+    public static final Drawable ICON_UNDO = App.instance.getResources().getDrawable(R.drawable.undo);
+    public static final Drawable ICON_REDO = App.instance.getResources().getDrawable(R.drawable.redo);
+    //public static final Drawable ICON_SETTINGS = App.instance.getResources().getDrawable(R.drawable.settings);
+    //public static final Drawable ICON_MENU = App.instance.getResources().getDrawable(R.drawable.menu);
+    //public static final Drawable ICON_DASHBOARD = App.instance.getResources().getDrawable(R.drawable.dash);
+    //public static final Drawable ICON_PLAY = App.instance.getResources().getDrawable(R.drawable.play);
+    public static final Drawable ICON_DELETE = App.instance.getResources().getDrawable(R.drawable.delete);
+    public static final Drawable ICON_COPY = App.instance.getResources().getDrawable(R.drawable.copy);
 
     public static RectF CONSOLE_RECT = new RectF();
 
     public StoryView(Context context) {
         super(context);
-        Log.d("Density", MainActivity.density + "");
+        Log.d("Density", App.density + "");
         instance = this;
         getHolder().addCallback(this);
         p = new Paint();
@@ -107,7 +107,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                     _t.setPosition(x, y - 180);
                     _t.invisible = true;
                     s.add(_t);
-                    MainActivity.vibrator.vibrate(50);
+                    App.vibrator.vibrate(50);
 
                     thing = _t;
                     click.x = x - _t.getPosition().x;
@@ -129,10 +129,10 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
                         if(thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
 
                             DialogWindow alert = new DialogWindow();
-                            alert.showDialog(MainActivity.instance, "Text");
+                            alert.showDialog(App.instance, "Text");
 
                             //ProjectSettingsWindow alert = new ProjectSettingsWindow();
-                            //alert.showDialog(MainActivity.instance, "Text");
+                            //alert.showDialog(App.instance, "Text");
 
                             doubleclick = false;
 
@@ -265,7 +265,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
         updateDrawables();
         this.s = this.story.scenes.get(scene);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            MainActivity.instance.getWindow().setNavigationBarColor(Color.parseColor(this.s.background));
+            App.instance.getWindow().setNavigationBarColor(Color.parseColor(this.s.background));
         }
     }
     @Override
