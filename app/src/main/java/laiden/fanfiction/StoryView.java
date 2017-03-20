@@ -229,7 +229,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
         else if(event == MotionEvent.ACTION_UP){
-            if(thing != null && CONSOLE_RECT.contains(x, y) && resize_corner == -1){
+            if(thing != null && CONSOLE_RECT.contains(x, y) && resize_corner == -1 && moving){
                 s.things.remove(thing);
                 thing = null;
             }
