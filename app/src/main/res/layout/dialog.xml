@@ -49,27 +49,18 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/dialog_bar"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="16dp"
-        android:layout_toRightOf="@+id/button_back"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Element text"
         android:inputType="textMultiLine"
         android:paddingBottom="10dp"
         android:textColor="@android:color/black"
         android:textColorHint="@android:color/darker_gray" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:buttonTint="@android:color/black"
-        android:id="@+id/radioButton"
-        android:textColor="@android:color/black"
-        android:layout_toStartOf="@+id/text"
-        android:layout_marginBottom="5dp"
-        android:layout_alignBottom="@+id/text"
-        android:layout_marginEnd="5dp" />
 
     <Switch
         android:id="@+id/switch1"
