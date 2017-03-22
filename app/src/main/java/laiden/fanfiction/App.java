@@ -55,7 +55,6 @@ public class App extends AppCompatActivity {
         super.onPause();
         setTaskColor();
     }
-
     private void setTaskColor(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Bitmap i = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);

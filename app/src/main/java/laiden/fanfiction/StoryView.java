@@ -2,6 +2,7 @@ package laiden.fanfiction;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
@@ -128,8 +129,8 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
 
                         if(thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
 
-                            DialogWindow alert = new DialogWindow();
-                            alert.showDialog(App.instance, "Text");
+                            Intent settingsIntent = new Intent(App.instance, PreferenceActivity.class);
+                            App.instance.startActivity(settingsIntent);
 
                             //ProjectSettingsWindow alert = new ProjectSettingsWindow();
                             //alert.showDialog(App.instance, "Text");
