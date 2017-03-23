@@ -4,6 +4,7 @@ package laiden.fanfiction;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,6 +16,27 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public final class Utils {
+
+    private static Rect _r = new Rect();
+
+    public static String hexColor(int intColor){
+        return "#" + String.format("%08x", intColor).toUpperCase();
+    }
+    public static int intColor(String hexColor){
+        return (int)Long.parseLong(hexColor.replaceFirst("#", ""), 16);
+    }
+    public static Rect getBorder(Rect rect, int size, int dx, int dy){
+        _r.set(rect.left - size, rect.top - size, rect.right + size, rect.bottom + size);
+        _r.offset(dx, dy);
+
+        return _r;
+    }
+    public static String ellipsize(String input, int maxLength) {
+        if (input == null || input.length() < maxLength) {
+            return input;
+        }
+        return input.substring(0, maxLength) + "...";
+    }
     public static Rect inflatedRect(int a, int b, int c, int d, float f){
         Rect r = new Rect(a, b, c, d);
         return scaleRect(r, f);
@@ -36,13 +58,14 @@ public final class Utils {
         return r;
     }
     public static Rect deflatedRect(Rect r, float d){
-        return new Rect((int)(r.left - d), (int)(r.top - d), (int)(r.right + d*2), (int)(r.bottom + d*2));
+        return new Rect((int)(r.left - d), (int)(r.top - d), (int)(r.right + d), (int)(r.bottom + d));
     }
     public static RectF inflatedRect(RectF r, float d){
-        return new RectF((r.left - d), (r.top - d), (r.right + d*2), (r.bottom + d*2));
+        return new RectF((r.left - d), (r.top - d), (r.right + d), (r.bottom + d));
     }
-    public static Rect inflatedRect(Rect r, float d){
-        return new Rect((int)(r.left - d), (int)(r.top - d), (int)(r.right + d*2), (int)(r.bottom + d*2));
+    public static Rect inflatedRect(Rect r, int d){
+        r.set(r.left - d, r.top - d, r.right + d, r.bottom + d);
+        return r;
     }
     public static boolean copyResource(int id, File destination) {
         try {

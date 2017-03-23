@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -105,7 +106,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             if(ICON_ADD.getBounds().contains((int)x, (int)y) && thing == null){
                 if(s.addable()){
                     Thing _t = new Thing();
-                    _t.setPosition(x, y - 180);
+                    _t.setPosition((int)x, (int)(y - 180));
                     _t.invisible = true;
                     s.add(_t);
                     App.vibrator.vibrate(50);
@@ -122,12 +123,12 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             if(resize_corner == -1) {
                 for(int i = s.things.size()-1; i >= 0; i--){
                     Thing t = s.things.get(i);
-                    if (t.box().contains(x, y)) {
+                    if (t.box().contains((int)x, (int)y)) {
                         //t.onTouch(x, y);
 
                         EditorHistory.add(t, "SETCOORDS", t.getPosition().x, t.getPosition().y);
 
-                        if(thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
+                        if(!moving && thing != null && doubleclick && (System.currentTimeMillis() - doubleclick_time) <= DOUBLECLICK) {
 
                             Intent settingsIntent = new Intent(App.instance, PreferenceActivity.class);
                             App.instance.startActivity(settingsIntent);
@@ -179,53 +180,53 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             if(thing != null){
                 if(resize_corner != -1 && !thing.invisible){ /* Resizes the element from a corner, cannot resize translucent elements. */
                     if(resize_corner == 0){
-                        RectF box = thing.box();
-                        box.left = x;
-                        box.top = y;
+                        Rect box = thing.box();
+                        box.left = (int)x;
+                        box.top = (int)y;
                         thing.setBox(box);
                     }
                     else if(resize_corner == 1){
-                        RectF box = thing.box();
-                        box.top = y;
+                        Rect box = thing.box();
+                        box.top = (int)y;
                         thing.setBox(box);
                     }
                     else if(resize_corner == 2){
-                        RectF box = thing.box();
-                        box.right = x;
-                        box.top = y;
+                        Rect box = thing.box();
+                        box.right = (int)x;
+                        box.top = (int)y;
                         thing.setBox(box);
                     }
                     else if(resize_corner == 3){
-                        RectF box = thing.box();
-                        box.left = x;
+                        Rect box = thing.box();
+                        box.left = (int)x;
                         thing.setBox(box);
                     }
                     else if(resize_corner == 4){
-                        RectF box = thing.box();
-                        box.right = x;
+                        Rect box = thing.box();
+                        box.right = (int)x;
                         thing.setBox(box);
                     }
                     else if(resize_corner == 5){
-                        RectF box = thing.box();
-                        box.left = x;
-                        box.bottom = y;
+                        Rect box = thing.box();
+                        box.left = (int)x;
+                        box.bottom = (int)y;
                         thing.setBox(box);
                     }
                     else if(resize_corner == 6){
-                        RectF box = thing.box();
-                        box.bottom = y;
+                        Rect box = thing.box();
+                        box.bottom = (int)y;
                         thing.setBox(box);
                     }
                     else if(resize_corner == 7){
-                        RectF box = thing.box();
-                        box.right = x;
-                        box.bottom = y;
+                        Rect box = thing.box();
+                        box.right = (int)x;
+                        box.bottom = (int)y;
                         thing.setBox(box);
                     }
                 }
                 else if(!ICON_COPY.getBounds().contains((int)x, (int)y)){
                     moving = true;
-                    thing.setPosition(x-click.x, y-click.y); // move
+                    thing.setPosition((int)(x-click.x), (int)(y-click.y)); // move
                 }
             }
         }
@@ -233,6 +234,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
             if(thing != null && CONSOLE_RECT.contains(x, y) && resize_corner == -1 && moving){
                 s.things.remove(thing);
                 thing = null;
+                Log.d("StoryView", "Thing removed.");
             }
             resize_corner = -1;
             moving = false;

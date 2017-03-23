@@ -49,7 +49,7 @@ class DrawThread extends Thread{
                 debug_paint.setTextSize(Utils.ndp(30));
                 debug_paint.setColor(Color.WHITE);
 
-                ArrayList<RectF> drawn_boxes = new ArrayList<>();
+                ArrayList<Rect> drawn_boxes = new ArrayList<>();
                 ArrayList<Thing> drawables = new ArrayList<>();
 
 
@@ -63,13 +63,12 @@ class DrawThread extends Thread{
 
                         for (int i = StoryView.s.things.size() - 1; i >= 0; i--) {
                             Thing t = StoryView.s.things.get(i);
-                            RectF box = t.box();
                             boolean draw = true;
-                            for (RectF drawn_box : drawn_boxes)
-                                if (drawn_box.contains(box)) draw = false;
+                            for (Rect drawn_box : drawn_boxes)
+                                if (drawn_box.contains(t.box())) draw = false;
                             if (draw) {
                                 drawables.add(t);
-                                drawn_boxes.add(box);
+                                drawn_boxes.add(t.box());
                             }
                         }
 
