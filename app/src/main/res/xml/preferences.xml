@@ -8,7 +8,7 @@
             android:title="Content"
             android:summary="Edit the text, select a background, choose colors.">
             <EditTextPreference
-                android:key="prefer wifi"
+                android:key="a"
                 android:title="Prefer WiFi" />
         </PreferenceScreen>
         <PreferenceScreen
@@ -16,11 +16,11 @@
             android:title="Layout"
             android:summary="Manage position">
             <CheckBoxPreference
-                android:key="prefer wifi"
+                android:key="c"
                 android:title="Prefer WiFi" />
         </PreferenceScreen>
         <CheckBoxPreference
-            android:key="wifi enabled"
+            android:key="b"
             android:title="Checkbox" />
     </PreferenceCategory>
 
