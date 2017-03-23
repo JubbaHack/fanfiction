@@ -18,7 +18,7 @@ public final class StoryManager {
 
     public static File files;
     public static File stories;
-    private static Gson gson;
+    public static Gson gson;
 
     static {
         files = App.instance.getFilesDir();

@@ -3,25 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="first_preferencescreen">
     <PreferenceCategory android:title="Element properties">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="elementproperties_type"
+            android:title="Type"
+            android:summary="Image block, ignoring text and colors."/>
         <PreferenceScreen
-            android:key="second_preferencescreen"
+            android:key="elementproperties_content"
             android:title="Content"
             android:summary="Edit the text, select a background, choose colors.">
             <EditTextPreference
-                android:key="a"
-                android:title="Prefer WiFi" />
+                android:key="elementproperties_content_text"
+                android:title="Set element text"
+                android:summary="Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet ipsum dolor sit amet ipsum dolor sit amet "
+                />
         </PreferenceScreen>
         <PreferenceScreen
-            android:key="second_preferencescreen"
+            android:key="elementproperties_position"
             android:title="Layout"
             android:summary="Manage position">
             <CheckBoxPreference
                 android:key="c"
                 android:title="Prefer WiFi" />
         </PreferenceScreen>
-        <CheckBoxPreference
-            android:key="b"
-            android:title="Checkbox" />
     </PreferenceCategory>
 
 </PreferenceScreen>

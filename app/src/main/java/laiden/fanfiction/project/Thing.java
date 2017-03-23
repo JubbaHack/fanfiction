@@ -65,6 +65,9 @@ public class Thing {
         this.text             = DEFAULT_T;
         this.index            = -1;
     }
+    public boolean isImage(){
+        return !ResourceManager.isColor(background);
+    }
     public void setText(String t){
         this.text = t;
     }
