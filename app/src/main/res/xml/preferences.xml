@@ -2,23 +2,26 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="first_preferencescreen">
-    <PreferenceScreen
-        android:key="second_preferencescreen"
-        android:title="Content"
-        android:summary="Edit the text, select a background, choose colors.">
-        <EditTextPreference
-            android:key="prefer wifi"
-            android:title="Prefer WiFi" />
-    </PreferenceScreen>
-    <PreferenceScreen
-        android:key="second_preferencescreen"
-        android:title="Layout"
-        android:summary="Manage position">
+    <PreferenceCategory android:title="Element properties">
+        <PreferenceScreen
+            android:key="second_preferencescreen"
+            android:title="Content"
+            android:summary="Edit the text, select a background, choose colors.">
+            <EditTextPreference
+                android:key="prefer wifi"
+                android:title="Prefer WiFi" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="second_preferencescreen"
+            android:title="Layout"
+            android:summary="Manage position">
+            <CheckBoxPreference
+                android:key="prefer wifi"
+                android:title="Prefer WiFi" />
+        </PreferenceScreen>
         <CheckBoxPreference
-            android:key="prefer wifi"
-            android:title="Prefer WiFi" />
-    </PreferenceScreen>
-    <CheckBoxPreference
-        android:key="wifi enabled"
-        android:title="Checkbox" />
+            android:key="wifi enabled"
+            android:title="Checkbox" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
