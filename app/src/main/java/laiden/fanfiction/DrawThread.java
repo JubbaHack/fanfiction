@@ -55,6 +55,8 @@ class DrawThread extends Thread{
 
 
                 canvas = surfaceHolder.lockCanvas(null);
+
+
                 if(canvas != null && StoryView.s != null && StoryView.s.things != null) synchronized (surfaceHolder) {
                     if(StoryView.s != null) {
 

@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">Fanfiction</string>
+
+    <string name="placeholder_none">&lt;none&gt;</string>
+
+    <string name="label_resource">Resource</string>
+    <string name="label_select_resource">Select resource</string>
+    <string name="description_select_resource">Draw selected image only</string>
+    <string name="label_select_color">Use static color</string>
+    <string name="description_select_color">Allows drawing of text</string>
+    <string name="label_edit_text">Text</string>
+    <string name="label_text_color">Text color</string>
+    <string name="label_color">Color</string>
+    <string name="label_background">Background</string>
+    <string name="label_border">Border</string>
+    <string name="description_border_none">No border</string>
+    <string name="description_border_offset_by">offset by</string>
+    <string name="description_border_no_offset">without offset</string>
+    <string name="label_cat_properties">Element properties</string>
+    <string name="label_text_disabled">Text features disabled</string>
+    <string name="description_text_disabled">Image is selected as a background</string>
+    <string name="label_content">Content</string>
+    <string name="description_content">Edit the text, select a background, choose colors</string>
+    <string name="label_layout">Layout</string>
+    <string name="description_layout">Manage element position and sizing</string>
+    <string name="label_behaviour">Behaviour</string>
+    <string name="description_behaviour">Script an element\'s behaviour</string>
+    <string name="label_lock_element">Lock element</string>
+    <string name="description_lock_element">Prevent the element from being dragged</string>
 </resources>

@@ -108,7 +108,24 @@ public class Thing {
     public String getBackground(){
         return this.background;
     }
-
+    public int getBorderSize(){
+        return border_size;
+    }
+    public int getBorderDx(){
+        return border_dx;
+    }
+    public int getBorderDy(){
+        return border_dy;
+    }
+    public boolean hasBorderOffset(){
+        return !(border_dx == 0 && border_dy == 0);
+    }
+    public String getBorderColor(){
+        return border_color;
+    }
+    public boolean hasBorder(){
+        return border_size > 0;
+    }
     public void render(Canvas canvas, boolean sel){
         _p.setPathEffect(null);
         _p.setColor(0x00000000);
@@ -124,8 +141,10 @@ public class Thing {
         }
         if(!ResourceManager.isResource(background)){
 
-            _p.setColor(Color.parseColor(border_color));
-            canvas.drawRect(Utils.getBorder(this.box, border_size, border_dx, border_dy), _p);
+            if(hasBorder()){
+                _p.setColor(Color.parseColor(border_color));
+                canvas.drawRect(Utils.getBorder(this.box, border_size, border_dx, border_dy), _p);
+            }
 
             _p.setColor(ResourceManager.color(background));
             canvas.drawRect(this.box, _p);

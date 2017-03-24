@@ -2,68 +2,68 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="element-properties">
-    <PreferenceCategory android:title="Element properties">
+    <PreferenceCategory android:title="@string/label_cat_properties">
         <PreferenceScreen
             android:key="element-properties content"
-            android:summary="Edit the text, select a background, choose colors"
-            android:title="Content">
+            android:summary="@string/description_content"
+            android:title="@string/label_content">
             <PreferenceScreen
                 android:key="element-properties content background"
-                android:summary="#FFFFFF"
-                android:title="Background">
+                android:summary="@string/placeholder_none"
+                android:title="@string/label_background">
                 <PreferenceScreen
                     android:key="element-properties content background type-image"
-                    android:summary="Draw selected image only"
-                    android:title="Select resource" />
+                    android:summary="@string/description_select_resource"
+                    android:title="@string/label_select_resource" />
                 <com.jrummyapps.android.colorpicker.ColorPreference
                     android:key="element-properties content background type-color"
-                    android:summary="Allows drawing of text"
-                    android:title="Use static color"
+                    android:summary="@string/description_select_color"
+                    android:title="@string/label_select_color"
                     app:cpv_showAlphaSlider="true"
                     app:cpv_colorShape="circle"
                     app:cpv_dialogType="custom"/>
             </PreferenceScreen>
             <EditTextPreference
                 android:key="element-properties content text"
-                android:summary="Lorem ipsum dolor sit amet..."
-                android:title="Text" />
+                android:summary="@string/placeholder_none"
+                android:title="@string/label_edit_text" />
             <com.jrummyapps.android.colorpicker.ColorPreference
                 android:key="element-properties content text-color"
-                android:summary="#000000"
-                android:title="Text color"
+                android:summary="@string/placeholder_none"
+                android:title="@string/label_text_color"
                 app:cpv_showAlphaSlider="true"
                 app:cpv_colorShape="circle"
                 app:cpv_dialogType="custom"/>
             <PreferenceScreen
                 android:key="element-properties content border"
-                android:summary="2px #000000 offset by 1px, 1px"
-                android:title="Border" />
+                android:summary="@string/placeholder_none"
+                android:title="@string/label_border" />
             <PreferenceScreen
                 android:enabled="false"
                 android:key="element-properties content disabled"
                 android:selectable="false"
-                android:summary="Image is selected as a background"
-                android:title="Text features disabled" />
+                android:summary="@string/description_text_disabled"
+                android:title="@string/label_text_disabled" />
         </PreferenceScreen>
         <PreferenceScreen
             android:key="element-properties layout"
-            android:summary="Manage element position and sizing"
-            android:title="Layout">
+            android:summary="@string/description_layout"
+            android:title="@string/label_layout">
 
         </PreferenceScreen>
         <PreferenceScreen
             android:enabled="false"
             android:key="element-properties behaviour"
-            android:summary="Script an element's behaviour"
-            android:title="Behaviour">
+            android:summary="@string/description_behaviour"
+            android:title="@string/label_behaviour">
 
         </PreferenceScreen>
     </PreferenceCategory>
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="element-properties lock"
-        android:title="Lock element"
-        android:summary="Prevent the element from being dragged"/>
+        android:title="@string/label_lock_element"
+        android:summary="@string/description_lock_element"/>
 
 
 </PreferenceScreen>

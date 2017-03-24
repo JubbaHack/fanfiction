@@ -13,6 +13,8 @@ import android.util.Log;
 
 import com.jrummyapps.android.colorpicker.ColorPreference;
 
+import static laiden.fanfiction.Utils.str;
+
 
 public class PreferenceActivity extends Activity {
 
@@ -65,16 +67,30 @@ public class PreferenceActivity extends Activity {
     private static void load(){
         if(StoryView.thing.isImage()){
             disable_content_preferences();
-            pref_background.setSummary("Resource '" + StoryView.thing.getBackground() + "'");
+            pref_background.setSummary(str("label_resource") + " '" + StoryView.thing.getBackground() + "'");
         }
         else{
             enable_content_preferences();
-            pref_background.setSummary("Color " + StoryView.thing.getBackground());
+            pref_background.setSummary(str("label_color") + " " + StoryView.thing.getBackground());
         }
         pref_text.setSummary(Utils.ellipsize(StoryView.thing.getText(), 35));
         pref_text.setText(StoryView.thing.getText());
-        pref_text_color.setSummary("Color " + StoryView.thing.getTextColor());
+        pref_text_color.setSummary(str("label_color") + " " + StoryView.thing.getTextColor());
         pref_text_color.saveValue(Utils.intColor(StoryView.thing.getTextColor()));
+
+        if(StoryView.thing.hasBorder()) {
+            String offset;
+            if(StoryView.thing.hasBorderOffset())
+                 offset = " " + str("description_border_offset_by") + " " + StoryView.thing.getBorderDx() + "px, " + StoryView.thing.getBorderDy() + "px";
+            else offset = " " + str("description_border_no_offset");
+            pref_border.setSummary(
+                    StoryView.thing.getBorderSize() +
+                    "px " +
+                    StoryView.thing.getBorderColor() +
+                    offset
+            );
+        }
+        else pref_border.setSummary(str("description_border_none"));
     }
 
     /* Fetches data from preferences, applies it to selected Thing. */

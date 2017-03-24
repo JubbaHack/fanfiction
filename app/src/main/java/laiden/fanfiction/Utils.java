@@ -19,6 +19,11 @@ public final class Utils {
 
     private static Rect _r = new Rect();
 
+    public static String str(String name){
+        int resId = App.instance.getResources().getIdentifier(name, "string", App.package_name);
+        return App.instance.getString(resId);
+    }
+
     public static String hexColor(int intColor){
         return "#" + String.format("%08x", intColor).toUpperCase();
     }
