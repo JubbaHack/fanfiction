@@ -43,7 +43,11 @@ public class App extends AppCompatActivity {
         storyView.play(test);
 
     }
-
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        instance = null;
+    }
     @Override
     protected void onResume(){
         super.onResume();

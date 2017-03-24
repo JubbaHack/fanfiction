@@ -21,6 +21,8 @@ import laiden.fanfiction.ResourceManager;
 import laiden.fanfiction.StoryView;
 import laiden.fanfiction.Utils;
 
+import static laiden.fanfiction.Utils.str;
+
 public class Thing {
 
     private static final int DEFAULT_W = (int)Utils.ndp(250);
@@ -36,7 +38,7 @@ public class Thing {
 
     private static final String DEFAULT_BC = "#FFFFFFFF";
     private static final String DEFAULT_TC = "#FF000000";
-    private static final String DEFAULT_T = "Default Text";
+    private static final String DEFAULT_T = str("default_text");
 
     public int index;
 

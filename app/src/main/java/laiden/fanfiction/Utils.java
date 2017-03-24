@@ -1,6 +1,7 @@
 package laiden.fanfiction;
 
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -21,7 +22,12 @@ public final class Utils {
 
     public static String str(String name){
         int resId = App.instance.getResources().getIdentifier(name, "string", App.package_name);
-        return App.instance.getString(resId);
+        try {
+            return App.instance.getString(resId);
+        }
+        catch(Resources.NotFoundException e){
+            return "<missing text>";
+        }
     }
 
     public static String hexColor(int intColor){

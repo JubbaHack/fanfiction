@@ -1,7 +1,9 @@
 package laiden.fanfiction;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
@@ -27,23 +29,47 @@ public class PreferenceActivity extends Activity {
     private static Preference         pref_border;
     private static Preference         pref_text_disabled;
 
+    private static PreferenceActivity instance;
+
+    private static Uri _s;
+
+    private static final int SELECT_FILE_REQUEST_CODE = 1337;
 
     @Override
     protected void onDestroy(){
         super.onDestroy();
         data = null;
+        instance = null;
         PreferenceManager.getDefaultSharedPreferences(this).edit().clear().apply();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         data = null;
+        instance = this;
         PreferenceManager.getDefaultSharedPreferences(this).edit().clear().apply();
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new PrefsFragment()).commit();
 
 
+    }
+    private static void select_file() {
+        Intent intent = new Intent()
+                .setType("image/*")
+                .setAction(Intent.ACTION_GET_CONTENT);
+
+        instance.startActivityForResult(Intent.createChooser(intent, "Select a file"), SELECT_FILE_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SELECT_FILE_REQUEST_CODE && resultCode == RESULT_OK) {
+            _s = data.getData(); //The uri with the location of the file
+            Log.d("uri", _s.toString());
+        }
     }
     private static void disable_content_preferences(){
         pref_content.removePreference(pref_text);
@@ -105,6 +131,7 @@ public class PreferenceActivity extends Activity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             // Load the preferences from an XML resource
+
             addPreferencesFromResource(R.xml.preferences);
                 pref_content       = (PreferenceScreen) findPreference("element-properties content");
                 pref_background    = findPreference("element-properties content background");
@@ -115,9 +142,22 @@ public class PreferenceActivity extends Activity {
             load();
         }
         @Override
+        public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference){
+            if(preference.getKey().equals("element-properties content background type-image")){
+                select_file();
+
+            }
+            return true;
+        }
+        @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             data = sharedPreferences;
             Log.d("PreferenceActivity", "Preferences updated: " + StoryManager.gson.toJson(data.getAll()));
+
+            //
+            //
+
+
             save();
         }
         @Override
@@ -133,6 +173,7 @@ public class PreferenceActivity extends Activity {
             super.onPause();
         }
     }
+
 
 
 }

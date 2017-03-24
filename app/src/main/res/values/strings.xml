@@ -3,6 +3,8 @@
 
     <string name="placeholder_none">&lt;none&gt;</string>
 
+    <string name="default_text">Default text</string>
+
     <string name="label_resource">Resource</string>
     <string name="label_select_resource">Select resource</string>
     <string name="description_select_resource">Draw selected image only</string>
