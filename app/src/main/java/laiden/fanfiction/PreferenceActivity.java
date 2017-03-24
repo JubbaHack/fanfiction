@@ -1,6 +1,8 @@
 package laiden.fanfiction;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -11,9 +13,18 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 import com.jrummyapps.android.colorpicker.ColorPreference;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import static laiden.fanfiction.Utils.str;
 
@@ -31,7 +42,7 @@ public class PreferenceActivity extends Activity {
 
     private static PreferenceActivity instance;
 
-    private static Uri _s;
+    private static File _s;
 
     private static final int SELECT_FILE_REQUEST_CODE = 1337;
 
@@ -67,9 +78,52 @@ public class PreferenceActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == SELECT_FILE_REQUEST_CODE && resultCode == RESULT_OK) {
-            _s = data.getData(); //The uri with the location of the file
-            Log.d("uri", _s.toString());
+            try {
+                InputStream in = getContentResolver().openInputStream(data.getData());
+                File r = StoryManager.addResource(in, StoryView.story.name, "test");
+                show_name_dialog();
+                Log.d("!!!!", r.toString() + " " + r.exists() + " " + r.getAbsolutePath());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
         }
+    }
+    private static void show_name_dialog(){
+        final EditText editText = new EditText(instance);
+        final AlertDialog dialog = new AlertDialog.Builder(instance)
+                .setTitle("Add a new task")
+                .setView(editText)
+                .setCancelable(false)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {} })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() { @Override public void onClick(DialogInterface d, int w) {} })
+                .create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String name = String.valueOf(editText.getText());
+                if(name.isEmpty()){
+                    editText.setError("Cannot be blank.");
+
+                }
+                else{
+                    Log.d("!!!", name);
+                    dialog.dismiss();
+                }
+
+            }
+        });
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
     }
     private static void disable_content_preferences(){
         pref_content.removePreference(pref_text);

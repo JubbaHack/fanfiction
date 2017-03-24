@@ -5,8 +5,12 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import laiden.fanfiction.project.Story;
 
@@ -57,6 +61,22 @@ public final class StoryManager {
             Log.d("StoryManager", "Deleting story '" + name + "'...");
             return true;
         }
+    }
+    public static File addResource(InputStream in, String story, String name){
+        File story_dir = new File(stories.getPath() + "/" + story);
+        File resources_dir = new File(story_dir.getPath() + "/" + RESOURCES_DIRECTORY);
+        name += ".png";
+        File resource = new File(resources_dir.getPath() + "/" + name);
+        try {
+            OutputStream out = new FileOutputStream(resource);
+            Utils.copyInputStreamToFile(in, out);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return resource.isFile() ? resource : null;
     }
     public static ErrorType createStory(String name){
         File storydir = new File(stories.getPath() + "/" + name);

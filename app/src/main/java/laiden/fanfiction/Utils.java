@@ -78,6 +78,19 @@ public final class Utils {
         r.set(r.left - d, r.top - d, r.right + d, r.bottom + d);
         return r;
     }
+    public static void copyInputStreamToFile(InputStream in, OutputStream out) {
+        try {
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            in.close();
+            out.close();
+        } catch (IOException ex) {
+
+        }
+    }
     public static boolean copyResource(int id, File destination) {
         try {
             int len;
