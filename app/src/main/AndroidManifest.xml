@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".PreferenceActivity" android:theme="@style/Theme.AppCompat.Light.Dialog">
         </activity>
+        <activity android:name=".ResourceListActivity" android:theme="@style/Theme.AppCompat.Light.Dialog">
+        </activity>
 
     </application>
 

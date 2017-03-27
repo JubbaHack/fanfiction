@@ -1,18 +1,15 @@
 package laiden.fanfiction;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.preference.SwitchPreference;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -22,9 +19,7 @@ import com.jrummyapps.android.colorpicker.ColorPreference;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import static laiden.fanfiction.Utils.str;
 
@@ -198,7 +193,8 @@ public class PreferenceActivity extends Activity {
         @Override
         public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference){
             if(preference.getKey().equals("element-properties content background type-image")){
-                select_file();
+                Intent i = new Intent(instance, ResourceListActivity.class);
+                instance.startActivity(i);
 
             }
             return true;

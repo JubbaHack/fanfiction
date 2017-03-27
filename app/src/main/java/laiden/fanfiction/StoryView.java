@@ -43,7 +43,7 @@ public class StoryView extends SurfaceView implements SurfaceHolder.Callback {
     private static ArrayList<String> editor_history = new ArrayList<>();
     private static int editor_history_ptr = -1;
 
-    public Map<String, Drawable> drawables;
+    public static Map<String, Drawable> drawables;
 
     public static boolean moving = false;
 
